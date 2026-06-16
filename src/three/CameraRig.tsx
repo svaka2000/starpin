@@ -22,6 +22,7 @@ export default function CameraRig() {
   const desiredCam = useRef(PRESETS.cosmos.cam.clone())
   const desiredTgt = useRef(PRESETS.cosmos.tgt.clone())
   const animating = useRef(true)
+  const intro = useRef(true)
   const prevView = useRef(view)
 
   useEffect(() => {
@@ -50,11 +51,13 @@ export default function CameraRig() {
   useFrame(() => {
     if (!controls) return
     if (animating.current) {
-      camera.position.lerp(desiredCam.current, 0.075)
-      controls.target.lerp(desiredTgt.current, 0.075)
+      const f = intro.current ? 0.03 : 0.075
+      camera.position.lerp(desiredCam.current, f)
+      controls.target.lerp(desiredTgt.current, f)
       controls.update()
-      if (camera.position.distanceTo(desiredCam.current) < 0.35) {
+      if (camera.position.distanceTo(desiredCam.current) < 0.4) {
         animating.current = false
+        intro.current = false
         controls.enabled = true
       }
     } else {

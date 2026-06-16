@@ -25,13 +25,18 @@ export default function App() {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [introReady, setIntroReady] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<number | undefined>(undefined)
 
-  // brief branded loader while the scene + textures warm up
+  // brief branded loader, then let the cinematic fly-in play before the modal appears
   useEffect(() => {
-    const t = window.setTimeout(() => setLoading(false), 1700)
-    return () => window.clearTimeout(t)
+    const t1 = window.setTimeout(() => setLoading(false), 1300)
+    const t2 = window.setTimeout(() => setIntroReady(true), 3600)
+    return () => {
+      window.clearTimeout(t1)
+      window.clearTimeout(t2)
+    }
   }, [])
 
   // audio: resume if previously enabled, and play sfx on select / add
@@ -98,7 +103,7 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing])
 
-  const onboardingOpen = !seenOnboarding || menuOpen
+  const onboardingOpen = (!seenOnboarding && introReady) || menuOpen
   const closeOnboarding = () => {
     dismissOnboarding()
     setMenuOpen(false)

@@ -11,7 +11,7 @@ import { useVoyage } from '../store/useVoyage'
 export default function CosmosScene() {
   return (
     <Canvas
-      camera={{ position: [0, 16, 40], fov: 55, near: 0.1, far: 6000 }}
+      camera={{ position: [0, 44, 150], fov: 55, near: 0.1, far: 6000 }}
       dpr={[1, 2]}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
       onPointerMissed={() => useVoyage.getState().select(null)}
