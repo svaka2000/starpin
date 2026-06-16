@@ -1,9 +1,33 @@
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { getBody } from '../data/cosmos'
 import { compact, describeDistance, lightTravelLabel } from '../lib/astro'
+import { TEXTURES } from '../data/textures'
 import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
 import { Plus, Rocket, X } from './icons'
+
+function HeroThumb({ body }: { body: CelestialBody }) {
+  const [failed, setFailed] = useState(false)
+  const hasRender = Boolean(TEXTURES[body.id]) && !failed
+  return (
+    <div
+      className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-xl text-2xl"
+      style={{ background: `${body.color}22`, boxShadow: `0 0 26px -6px ${body.color}` }}
+    >
+      {hasRender ? (
+        <img
+          src={`/renders/${body.id}.png`}
+          alt={body.name}
+          className="h-full w-full object-cover"
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        body.emoji
+      )}
+    </div>
+  )
+}
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
@@ -68,12 +92,7 @@ export default function Inspector() {
             </button>
 
             <div className="flex items-start gap-3">
-              <div
-                className="grid h-12 w-12 shrink-0 place-items-center rounded-xl text-2xl"
-                style={{ background: `${body.color}22`, boxShadow: `0 0 24px -6px ${body.color}` }}
-              >
-                {body.emoji}
-              </div>
+              <HeroThumb body={body} />
               <div className="min-w-0 pr-6">
                 <h3 className="font-display text-lg font-bold leading-tight text-white">{body.name}</h3>
                 <div className="flex items-center gap-2">
