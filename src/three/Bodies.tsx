@@ -8,6 +8,7 @@ import { glowTexture } from '../lib/textures'
 import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
 import Planet from './Planet'
+import BlackHole from './BlackHole'
 
 function coreRadius(b: CelestialBody): number {
   if (b.id === 'sun') return 1.15
@@ -61,6 +62,8 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
     <group position={body.scenePos}>
       {body.region === 'solar' ? (
         <Planet body={body} core={core} />
+      ) : body.kind === 'blackhole' || body.kind === 'quasar' ? (
+        <BlackHole core={core} quasar={body.kind === 'quasar'} />
       ) : (
         <>
           {/* soft glow */}
@@ -77,7 +80,7 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
           <mesh ref={coreRef}>
             <sphereGeometry args={[core, 28, 28]} />
             <meshStandardMaterial
-              color={body.kind === 'blackhole' ? '#05060c' : body.color}
+              color={body.color}
               emissive={body.color}
               emissiveIntensity={0.9}
               roughness={0.55}
@@ -150,11 +153,41 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
   )
 }
 
+function Belt({ rIn, rOut, count, color, size }: { rIn: number; rOut: number; count: number; color: string; size: number }) {
+  const geo = useMemo(() => {
+    const pos: number[] = []
+    let seed = Math.round(rIn * 1000)
+    const rng = () => {
+      seed = (seed * 1103515245 + 12345) & 0x7fffffff
+      return seed / 0x7fffffff
+    }
+    for (let i = 0; i < count; i++) {
+      const a = rng() * Math.PI * 2
+      const r = rIn + rng() * (rOut - rIn)
+      pos.push(Math.cos(a) * r, (rng() - 0.5) * 0.12, Math.sin(a) * r)
+    }
+    const g = new THREE.BufferGeometry()
+    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    return g
+  }, [rIn, rOut, count])
+  const ref = useRef<THREE.Points>(null)
+  useFrame((_, dt) => {
+    if (ref.current) ref.current.rotation.y += dt * 0.01
+  })
+  return (
+    <points ref={ref} geometry={geo}>
+      <pointsMaterial color={color} size={size} sizeAttenuation transparent opacity={0.6} depthWrite={false} />
+    </points>
+  )
+}
+
 export default function Bodies() {
   const [hovered, setHovered] = useState<string | null>(null)
   return (
     <group>
       <Orbits />
+      <Belt rIn={auToSceneRadius(2.1)} rOut={auToSceneRadius(3.3)} count={1600} color="#9a8f7d" size={0.03} />
+      <Belt rIn={auToSceneRadius(30)} rOut={auToSceneRadius(50)} count={2200} color="#7f8aa8" size={0.03} />
       {COSMOS.map((b) => (
         <Pin key={b.id} body={b} hovered={hovered === b.id} onHover={setHovered} />
       ))}

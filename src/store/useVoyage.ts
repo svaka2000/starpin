@@ -13,6 +13,7 @@ interface VoyageState {
   panelOpen: boolean
   playing: boolean
   seenOnboarding: boolean
+  audioOn: boolean
 
   addStop: (id: string) => void
   removeStop: (id: string) => void
@@ -30,6 +31,7 @@ interface VoyageState {
   setPropulsion: (id: string) => void
   setPanelOpen: (open: boolean) => void
   setPlaying: (p: boolean) => void
+  setAudioOn: (on: boolean) => void
   dismissOnboarding: () => void
 }
 
@@ -44,6 +46,7 @@ export const useVoyage = create<VoyageState>()(
       panelOpen: true,
       playing: false,
       seenOnboarding: false,
+      audioOn: false,
 
       addStop: (id) =>
         set((s) =>
@@ -82,6 +85,7 @@ export const useVoyage = create<VoyageState>()(
       setPropulsion: (id) => set({ propulsion: id }),
       setPanelOpen: (open) => set({ panelOpen: open }),
       setPlaying: (p) => set({ playing: p }),
+      setAudioOn: (on) => set({ audioOn: on }),
       dismissOnboarding: () => set({ seenOnboarding: true }),
     }),
     {
@@ -91,6 +95,7 @@ export const useVoyage = create<VoyageState>()(
         propulsion: s.propulsion,
         view: s.view,
         seenOnboarding: s.seenOnboarding,
+        audioOn: s.audioOn,
       }),
     },
   ),

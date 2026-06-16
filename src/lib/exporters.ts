@@ -75,7 +75,7 @@ export function buildPlanText(stops: string[], propId: string): string {
 export function buildShareUrl(stops: string[], propId: string): string {
   const base = `${location.origin}${location.pathname}`
   const params = new URLSearchParams()
-  params.set('v', stops.join('-'))
+  params.set('v', stops.join('~')) // '~' avoids clashing with hyphens inside ids (e.g. sgr-a)
   params.set('p', propId)
   return `${base}?${params.toString()}`
 }
@@ -84,7 +84,9 @@ export function parseShareUrl(): { stops: string[]; prop: string | null } | null
   const params = new URLSearchParams(location.search)
   const v = params.get('v')
   if (!v) return null
-  const stops = v.split('-').filter((id) => getBody(id))
+  // split on '~'; fall back to legacy '-' for old links
+  const parts = v.includes('~') ? v.split('~') : v.split('-')
+  const stops = parts.filter((id) => getBody(id))
   if (stops.length === 0) return null
   return { stops, prop: params.get('p') }
 }

@@ -152,6 +152,36 @@ const RAW: Raw[] = [
     diameterKm: 2377, gravityG: 0.063, source: 'NASA New Horizons',
   },
 
+  // ── Spacecraft, a station & a comet ─────────────────────────────────────────
+  {
+    id: 'iss', name: 'ISS', emoji: '🛰️', kind: 'probe', kindLabel: 'Space station',
+    region: 'solar', parentId: 'earth', parentDistKm: 408, lonDeg: 150, color: '#dfe8ff', size: 0.16,
+    vibe: 'Home in orbit',
+    facts: ['Circles Earth every 90 minutes at 28,000 km/h — 16 sunrises a day.', 'Humans have lived aboard continuously since 2000.'],
+    source: 'NASA',
+  },
+  {
+    id: 'halley', name: "Halley's Comet", emoji: '☄️', kind: 'comet', kindLabel: 'Periodic comet',
+    region: 'solar', au: 17.8, lonDeg: 318, color: '#bfe6ff', size: 0.26,
+    vibe: 'Returns 2061',
+    facts: ['Sweeps past Earth every ~76 years; last seen 1986.', 'Its next return — July 2061 — may be your once-in-a-lifetime comet.'],
+    source: 'NASA',
+  },
+  {
+    id: 'voyager-1', name: 'Voyager 1', emoji: '📡', kind: 'probe', kindLabel: 'Interstellar probe',
+    region: 'solar', au: 165, lonDeg: 72, color: '#cfd6e6', size: 0.2,
+    vibe: 'Farthest human object',
+    facts: ['Launched 1977; crossed into interstellar space in 2012.', 'Carries the Golden Record — a message from humanity to the stars.'],
+    source: 'NASA JPL',
+  },
+  {
+    id: 'voyager-2', name: 'Voyager 2', emoji: '📡', kind: 'probe', kindLabel: 'Interstellar probe',
+    region: 'solar', au: 138, lonDeg: 248, color: '#cfd6e6', size: 0.2,
+    vibe: 'Grand Tour veteran',
+    facts: ['The only craft to visit all four giant planets.', 'Reached interstellar space in 2018 and still phones home.'],
+    source: 'NASA JPL',
+  },
+
   // ── Nearby stars ──────────────────────────────────────────────────────────
   {
     id: 'proxima', name: 'Proxima Centauri', emoji: '⭐', kind: 'star', kindLabel: 'Red dwarf',
@@ -435,6 +465,11 @@ export const PRESETS: VoyagePreset[] = [
     id: 'messier', emoji: '✨', title: 'Deep-Sky Marathon',
     blurb: 'Nebulae, clusters and galaxies.',
     stops: ['orion', 'pleiades', 'crab', 'andromeda', 'sombrero'],
+  },
+  {
+    id: 'reach', emoji: '📡', title: "Humanity's Reach",
+    blurb: 'How far we’ve sent ourselves.',
+    stops: ['iss', 'moon', 'mars', 'voyager-1'],
   },
   {
     id: 'monsters', emoji: '🕳️', title: 'Cosmic Monsters',

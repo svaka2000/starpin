@@ -5,6 +5,7 @@ import Starfield from './Starfield'
 import Bodies from './Bodies'
 import VoyageRoute from './VoyageRoute'
 import CameraRig from './CameraRig'
+import Effects from './Effects'
 import { useVoyage } from '../store/useVoyage'
 
 export default function CosmosScene() {
@@ -25,6 +26,7 @@ export default function CosmosScene() {
       </Suspense>
       <VoyageRoute />
       <CameraRig />
+      <Effects />
       <OrbitControls
         makeDefault
         enablePan={false}

@@ -163,15 +163,27 @@ function PlainPlanet({ body, core }: { body: CelestialBody; core: number }) {
   useFrame((_, dt) => {
     if (ref.current) ref.current.rotation.y += dt * 0.08
   })
+  // Comet tail points away from the Sun (origin).
+  const tailQuat = useMemo(() => {
+    if (body.kind !== 'comet') return null
+    const dir = new THREE.Vector3(...body.scenePos).normalize()
+    return new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir).toArray() as [number, number, number, number]
+  }, [body])
   return (
     <group>
       <mesh ref={ref}>
         <sphereGeometry args={[core, 32, 32]} />
-        <meshStandardMaterial color={body.color} roughness={0.9} metalness={0.05} />
+        <meshStandardMaterial color={body.color} emissive={body.color} emissiveIntensity={body.kind === 'comet' ? 0.5 : 0.15} roughness={0.9} metalness={0.05} />
       </mesh>
       <sprite scale={[core * 2.6, core * 2.6, 1]}>
-        <spriteMaterial map={glowTexture(body.color)} transparent opacity={0.18} depthWrite={false} blending={THREE.AdditiveBlending} />
+        <spriteMaterial map={glowTexture(body.color)} transparent opacity={0.28} depthWrite={false} blending={THREE.AdditiveBlending} />
       </sprite>
+      {tailQuat && (
+        <mesh quaternion={tailQuat} position={[0, 0, 0]}>
+          <coneGeometry args={[core * 1.8, core * 14, 24, 1, true]} />
+          <meshBasicMaterial color="#bfe6ff" transparent opacity={0.22} side={THREE.DoubleSide} depthWrite={false} blending={THREE.AdditiveBlending} toneMapped={false} />
+        </mesh>
+      )}
     </group>
   )
 }

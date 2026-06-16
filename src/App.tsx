@@ -7,7 +7,9 @@ import Toolbar from './ui/Toolbar'
 import VoyagePanel from './ui/VoyagePanel'
 import Inspector from './ui/Inspector'
 import Onboarding from './ui/Onboarding'
+import Loader from './ui/Loader'
 import { buildShareUrl, parseShareUrl } from './lib/exporters'
+import { audio } from './lib/audio'
 import { useVoyage } from './store/useVoyage'
 
 export default function App() {
@@ -22,8 +24,29 @@ export default function App() {
   const focus = useVoyage((s) => s.focus)
 
   const [menuOpen, setMenuOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<number | undefined>(undefined)
+
+  // brief branded loader while the scene + textures warm up
+  useEffect(() => {
+    const t = window.setTimeout(() => setLoading(false), 1700)
+    return () => window.clearTimeout(t)
+  }, [])
+
+  // audio: resume if previously enabled, and play sfx on select / add
+  useEffect(() => {
+    if (useVoyage.getState().audioOn) audio.start()
+    let prevSel = useVoyage.getState().selectedId
+    let prevLen = useVoyage.getState().stops.length
+    const unsub = useVoyage.subscribe((s) => {
+      if (s.selectedId && s.selectedId !== prevSel) audio.whoosh()
+      prevSel = s.selectedId
+      if (s.stops.length > prevLen) audio.blip()
+      prevLen = s.stops.length
+    })
+    return unsub
+  }, [])
 
   const showToast = (m: string) => {
     setToast(m)
@@ -114,6 +137,8 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <AnimatePresence>{loading && <Loader />}</AnimatePresence>
     </div>
   )
 }

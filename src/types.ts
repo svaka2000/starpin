@@ -11,6 +11,8 @@ export type BodyClass =
   | 'blackhole'
   | 'quasar'
   | 'void'
+  | 'probe'
+  | 'comet'
 
 /** Which spatial band the body lives in — controls how it is placed in the 3D scene. */
 export type Region = 'solar' | 'deep'

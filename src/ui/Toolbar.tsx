@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { COSMOS } from '../data/cosmos'
 import { useVoyage, type ViewMode } from '../store/useVoyage'
-import { Compass, GlobeIcon, MapIcon, Orbit, Panel, Pause, Play, Scale, Search, Share, Shuffle } from './icons'
+import { audio } from '../lib/audio'
+import { Compass, GlobeIcon, MapIcon, Orbit, Panel, Pause, Play, Scale, Search, Share, Shuffle, Volume, VolumeOff } from './icons'
 
 const VIEWS: { id: ViewMode; label: string; Icon: typeof GlobeIcon }[] = [
   { id: 'cosmos', label: 'Cosmos', Icon: GlobeIcon },
@@ -45,6 +46,8 @@ export default function Toolbar({ onVoyages, onShare }: { onVoyages: () => void;
   const stops = useVoyage((s) => s.stops)
   const panelOpen = useVoyage((s) => s.panelOpen)
   const setPanelOpen = useVoyage((s) => s.setPanelOpen)
+  const audioOn = useVoyage((s) => s.audioOn)
+  const setAudioOn = useVoyage((s) => s.setAudioOn)
 
   const [q, setQ] = useState('')
   const [focused, setFocused] = useState(false)
@@ -135,6 +138,13 @@ export default function Toolbar({ onVoyages, onShare }: { onVoyages: () => void;
           >
             <Shuffle width={17} height={17} />
           </button>
+          <TIcon
+            label={audioOn ? 'Mute' : 'Sound on'}
+            active={audioOn}
+            onClick={() => setAudioOn(audio.toggle())}
+          >
+            {audioOn ? <Volume width={17} height={17} /> : <VolumeOff width={17} height={17} />}
+          </TIcon>
           <TIcon label="Voyages" onClick={onVoyages}>
             <Compass width={18} height={18} />
           </TIcon>

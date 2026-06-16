@@ -4,6 +4,7 @@ import { Stars, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { Suspense } from 'react'
 import { glowTexture, starTexture } from '../lib/textures'
+import Effects from '../three/Effects'
 
 const K = 6 // visual zoom per tier
 const R = 3 // focused-tier radius that fills the view
@@ -328,6 +329,7 @@ function Scene({ p }: { p: number }) {
           <Tier key={t.kind} tier={t} i={i} p={p} />
         ))}
       </Suspense>
+      <Effects />
     </>
   )
 }
