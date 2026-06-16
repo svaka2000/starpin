@@ -27,9 +27,13 @@ to the edge of the observable universe.
 
 ## 🚀 Features
 
+- **Cinematic deep space** — real‑time bloom, a vignette and the genuine ESO Milky Way panorama as a skybox,
+  with a fly‑in intro from deep space and an optional procedural ambient soundtrack.
 - **Photoreal planets** — every world uses real NASA/CC surface maps. Earth has drifting clouds, glowing
   night‑side cities, ocean specular and a blue atmosphere; Saturn has its rings; the gas giants their bands;
   each planet its true axial tilt. Fly up to one and it looks *real*.
+- **Black holes & quasars, rendered** — Sgr A\* and M87\* get swirling accretion disks with relativistic
+  doppler beaming and a photon ring; the 3C 273 and TON 618 quasars fire twin relativistic jets.
 - **The Scale of the Universe** — a smooth log‑zoom (inspired by [htwins.net/scale2](https://htwins.net/scale2/))
   from Earth → the Moon → the Solar System → the nearest stars → the Milky Way → the Local Group → Laniakea →
   the cosmic web → the **observable universe**, with a live `10^X m` readout the whole way out.
@@ -43,6 +47,13 @@ to the edge of the observable universe.
 - **Everything out there** — 50 destinations including the Sgr A\* and M87\* black holes, the 3C 273 and
   TON 618 quasars, the Virgo Cluster and the eerie Boötes Void.
 - **Optimize, share, export** — route optimization, shareable URLs, JSON / mission‑plan exports, a guided tour.
+
+<div align="center">
+
+![Sagittarius A* black hole](docs/blackhole.png)
+*Sagittarius A\* — accretion disk, doppler beaming and photon ring, in real time.*
+
+</div>
 
 ## 🎨 Ultra‑realistic planets, rendered in Blender
 
