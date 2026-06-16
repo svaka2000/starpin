@@ -7,6 +7,7 @@ import { auToSceneRadius } from '../lib/astro'
 import { glowTexture } from '../lib/textures'
 import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
+import Planet from './Planet'
 
 function coreRadius(b: CelestialBody): number {
   if (b.id === 'sun') return 1.15
@@ -47,7 +48,6 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
 
   const coreRef = useRef<THREE.Mesh>(null)
   const haloRef = useRef<THREE.Mesh>(null)
-  const selfLit = body.kind !== 'planet' && body.kind !== 'moon' && body.kind !== 'dwarf'
 
   useFrame((state) => {
     if (coreRef.current) coreRef.current.rotation.y += 0.004
@@ -59,39 +59,36 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
 
   return (
     <group position={body.scenePos}>
-      {/* soft glow */}
-      <sprite scale={[core * 4.2 + 0.6, core * 4.2 + 0.6, 1]}>
-        <spriteMaterial
-          map={glowTexture(body.color)}
-          transparent
-          opacity={selfLit ? 0.85 : 0.55}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </sprite>
-
-      {/* core body */}
-      <mesh ref={coreRef}>
-        <sphereGeometry args={[core, 28, 28]} />
-        <meshStandardMaterial
-          color={body.kind === 'blackhole' ? '#05060c' : body.color}
-          emissive={body.color}
-          emissiveIntensity={selfLit ? 0.9 : 0.45}
-          roughness={0.55}
-          metalness={0.1}
-        />
-      </mesh>
-
-      {/* Saturn ring flourish */}
-      {body.id === 'saturn' && (
-        <mesh rotation={[-Math.PI / 2.6, 0, 0.3]}>
-          <ringGeometry args={[core * 1.5, core * 2.3, 64]} />
-          <meshBasicMaterial color="#e6cf9c" transparent opacity={0.6} side={THREE.DoubleSide} depthWrite={false} />
-        </mesh>
+      {body.region === 'solar' ? (
+        <Planet body={body} core={core} />
+      ) : (
+        <>
+          {/* soft glow */}
+          <sprite scale={[core * 4.2 + 0.6, core * 4.2 + 0.6, 1]}>
+            <spriteMaterial
+              map={glowTexture(body.color)}
+              transparent
+              opacity={0.85}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+            />
+          </sprite>
+          {/* core body */}
+          <mesh ref={coreRef}>
+            <sphereGeometry args={[core, 28, 28]} />
+            <meshStandardMaterial
+              color={body.kind === 'blackhole' ? '#05060c' : body.color}
+              emissive={body.color}
+              emissiveIntensity={0.9}
+              roughness={0.55}
+              metalness={0.1}
+            />
+          </mesh>
+        </>
       )}
 
-      {/* selected / stop halo */}
-      {(isSelected || isStop) && (
+      {/* selected / stop halo — only for distant deep-sky markers, not close-up planets */}
+      {(isSelected || isStop) && body.region !== 'solar' && (
         <Billboard>
           <mesh ref={haloRef}>
             <ringGeometry args={[core * 1.7, core * 1.95, 48]} />
