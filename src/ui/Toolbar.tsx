@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react'
 import { COSMOS } from '../data/cosmos'
 import { useVoyage, type ViewMode } from '../store/useVoyage'
-import { Compass, GlobeIcon, MapIcon, Orbit, Panel, Pause, Play, Search, Share, Shuffle } from './icons'
+import { Compass, GlobeIcon, MapIcon, Orbit, Panel, Pause, Play, Scale, Search, Share, Shuffle } from './icons'
 
 const VIEWS: { id: ViewMode; label: string; Icon: typeof GlobeIcon }[] = [
   { id: 'cosmos', label: 'Cosmos', Icon: GlobeIcon },
   { id: 'orrery', label: 'Orrery', Icon: Orbit },
   { id: 'sky', label: 'Sky', Icon: MapIcon },
+  { id: 'scale', label: 'Scale', Icon: Scale },
 ]
 
 function TIcon({

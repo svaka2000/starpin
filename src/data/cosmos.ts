@@ -333,6 +333,43 @@ const RAW: Raw[] = [
     source: 'EHT 2022',
   },
 
+  // ── Black holes, quasars & a void ───────────────────────────────────────────
+  {
+    id: 'm87', name: 'M87*', emoji: '🕳️', kind: 'blackhole', kindLabel: 'Supermassive black hole · M87',
+    region: 'deep', ra: 12.514, dec: 12.391, distanceLy: 53.5e6, color: '#ff9a3c', size: 1.15,
+    vibe: 'First ever imaged',
+    facts: ['The first black hole ever photographed (EHT, 2019).', '6.5 billion solar masses, firing a 5,000-light-year plasma jet.'],
+    source: 'EHT 2019',
+  },
+  {
+    id: '3c273', name: '3C 273', emoji: '💠', kind: 'quasar', kindLabel: 'Quasar',
+    region: 'deep', ra: 12.485, dec: 2.052, distanceLy: 2.443e9, color: '#bcd2ff', size: 1.05,
+    vibe: 'Brightest quasar',
+    facts: ['The first quasar ever identified — and the brightest in our sky.', 'A feeding black hole outshining its entire galaxy 100×, from 2.4 billion ly away.'],
+    discovered: '1963', source: 'Hubble',
+  },
+  {
+    id: 'ton618', name: 'TON 618', emoji: '🌑', kind: 'quasar', kindLabel: 'Hyperluminous quasar',
+    region: 'deep', ra: 12.467, dec: 31.193, distanceLy: 10.37e9, color: '#cdb8ff', size: 1.1,
+    vibe: 'The biggest monster',
+    facts: ['Hosts one of the most massive black holes known — ~66 billion Suns.', 'Its light left when the universe was a quarter of its current age.'],
+    source: 'SDSS',
+  },
+  {
+    id: 'virgo-cluster', name: 'Virgo Cluster', emoji: '🌐', kind: 'cluster', kindLabel: 'Galaxy cluster',
+    region: 'deep', ra: 12.44, dec: 12.72, distanceLy: 53.8e6, color: '#b8c6ff', size: 1.5,
+    vibe: 'A thousand galaxies',
+    facts: ['Up to ~2,000 galaxies bound together — the heart of our Local Supercluster.', 'M87 and its black hole sit at its center.'],
+    source: 'NASA/ESA',
+  },
+  {
+    id: 'bootes-void', name: 'Boötes Void', emoji: '⬛', kind: 'void', kindLabel: 'Cosmic void',
+    region: 'deep', ra: 14.5, dec: 40, distanceLy: 700e6, color: '#2a3350', size: 1.4,
+    vibe: 'The Great Nothing',
+    facts: ['A near-empty bubble of space ~330 million light-years across.', '“If the Milky Way were here, we wouldn’t have known other galaxies existed until the 1960s.”'],
+    source: 'Kirshner et al.',
+  },
+
   // ── Galaxies ──────────────────────────────────────────────────────────────
   {
     id: 'andromeda', name: 'Andromeda Galaxy', emoji: '🌌', kind: 'galaxy', kindLabel: 'Spiral galaxy · M31',
@@ -400,9 +437,14 @@ export const PRESETS: VoyagePreset[] = [
     stops: ['orion', 'pleiades', 'crab', 'andromeda', 'sombrero'],
   },
   {
+    id: 'monsters', emoji: '🕳️', title: 'Cosmic Monsters',
+    blurb: 'Black holes & quasars.',
+    stops: ['sgr-a', 'm87', '3c273', 'ton618'],
+  },
+  {
     id: 'edge', emoji: '🌌', title: 'To the Edge of the Sky',
-    blurb: 'Ride out to distant galaxies.',
-    stops: ['moon', 'sirius', 'orion', 'andromeda', 'stephans-quintet'],
+    blurb: 'Ride out past the quasars.',
+    stops: ['moon', 'sirius', 'andromeda', 'virgo-cluster', 'ton618'],
   },
 ]
 

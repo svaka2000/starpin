@@ -75,3 +75,6 @@ export const Wand = (p: SVGProps<SVGSVGElement>) => (
 export const Telescope = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}><path d="m3 13 6-2 1.5 3-6 2L3 13Z" /><path d="m9 11 8-4 2 4-8 4" /><path d="M13 16v5M11 21h4" /></svg>
 )
+export const Scale = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}><circle cx="12" cy="12" r="9.5" /><circle cx="12" cy="12" r="5.5" /><circle cx="12" cy="12" r="1.6" /></svg>
+)

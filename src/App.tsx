@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import CosmosScene from './three/CosmosScene'
 import SkyChart from './ui/SkyChart'
+import ScaleMode from './ui/ScaleMode'
 import Toolbar from './ui/Toolbar'
 import VoyagePanel from './ui/VoyagePanel'
 import Inspector from './ui/Inspector'
@@ -92,11 +93,13 @@ export default function App() {
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-ink text-white">
-      <div className="absolute inset-0">{view === 'sky' ? <SkyChart /> : <CosmosScene />}</div>
+      <div className="absolute inset-0">
+        {view === 'scale' ? <ScaleMode /> : view === 'sky' ? <SkyChart /> : <CosmosScene />}
+      </div>
 
       <Toolbar onVoyages={() => setMenuOpen(true)} onShare={onShare} />
-      <VoyagePanel />
-      <Inspector />
+      {view !== 'scale' && <VoyagePanel />}
+      {view !== 'scale' && <Inspector />}
       <Onboarding open={onboardingOpen} onClose={closeOnboarding} />
 
       <AnimatePresence>

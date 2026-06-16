@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { COSMOS, SAMPLE_VOYAGE } from '../data/cosmos'
 
-export type ViewMode = 'cosmos' | 'orrery' | 'sky'
+export type ViewMode = 'cosmos' | 'orrery' | 'sky' | 'scale'
 
 interface VoyageState {
   stops: string[]
