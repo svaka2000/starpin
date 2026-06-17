@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { getBody } from '../data/cosmos'
+import { DEEPSKY } from '../data/textures'
 import { useVoyage } from '../store/useVoyage'
 
 const PRESETS: Record<string, { cam: THREE.Vector3; tgt: THREE.Vector3 }> = {
@@ -34,7 +35,14 @@ export default function CameraRig() {
       const tgt = new THREE.Vector3(...body.scenePos)
       const len = tgt.length()
       const dir = len > 0.01 ? tgt.clone().normalize() : new THREE.Vector3(0, 0.4, 1).normalize()
-      const viewDist = THREE.MathUtils.clamp(2.6 + body.size * 2.4, 3, 8)
+      let viewDist: number
+      if (DEEPSKY.has(body.id)) {
+        viewDist = THREE.MathUtils.clamp(body.size * 6, 4, 9) * 1.75 // frame the large image billboards
+      } else if (body.kind === 'blackhole' || body.kind === 'quasar') {
+        viewDist = 7
+      } else {
+        viewDist = THREE.MathUtils.clamp(2.6 + body.size * 2.4, 3, 8)
+      }
       const cam = tgt.clone().add(dir.multiplyScalar(viewDist)).add(new THREE.Vector3(0, viewDist * 0.4, 0))
       desiredTgt.current.copy(tgt)
       desiredCam.current.copy(cam)

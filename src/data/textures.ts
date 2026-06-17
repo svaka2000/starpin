@@ -35,3 +35,10 @@ export const TEXTURES: Record<string, TexCfg> = {
   neptune: { map: '/textures/neptune.jpg', tilt: 28.3, atmosphere: '#4060ff' },
   pluto: { map: '/textures/pluto.jpg', tilt: 119.6 },
 }
+
+/** Deep-sky objects that have a real telescope photo in /textures/deepsky/<id>.jpg */
+export const DEEPSKY = new Set<string>([
+  'orion', 'crab', 'ring', 'helix', 'carina', 'eagle',
+  'andromeda', 'whirlpool', 'sombrero', 'stephans-quintet',
+  'pleiades', 'm13', 'virgo-cluster',
+])

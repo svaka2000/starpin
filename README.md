@@ -32,6 +32,8 @@ to the edge of the observable universe.
 - **Photoreal planets** — every world uses real NASA/CC surface maps. Earth has drifting clouds, glowing
   night‑side cities, ocean specular and a blue atmosphere; Saturn has its rings; the gas giants their bands;
   each planet its true axial tilt. Fly up to one and it looks *real*.
+- **Real deep-sky imagery** — every nebula, galaxy and cluster is the actual Hubble / JWST / ESO photo,
+  composited as a soft‑edged glowing billboard in its true position in the sky (no fake spheres).
 - **Black holes & quasars, rendered** — Sgr A\* and M87\* get swirling accretion disks with relativistic
   doppler beaming and a photon ring; the 3C 273 and TON 618 quasars fire twin relativistic jets.
 - **The Scale of the Universe** — a smooth log‑zoom (inspired by [htwins.net/scale2](https://htwins.net/scale2/))
@@ -114,6 +116,8 @@ public/textures/, public/renders/
 
 - Planet surface maps: NASA imagery via the [three.js](https://github.com/mrdoob/three.js) examples and the
   [planetpixelemporium](http://planetpixelemporium.com/planets.html) / Solar System Scope (CC‑BY) texture sets.
+- Deep-sky photos: public-domain Hubble / JWST / ESO imagery pulled from Wikipedia/Wikimedia & the NASA Image
+  Library (`blender/fetch_deepsky.py`). Milky Way skybox: ESO/S. Brunier panorama (CC‑BY 4.0).
 - Scale concept inspired by Cary & Michael Huang's [Scale of the Universe 2](https://htwins.net/scale2/).
 - Astronomical data: NASA, ESA/Gaia, SIMBAD, the NASA Exoplanet Archive.
 

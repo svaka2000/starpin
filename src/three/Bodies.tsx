@@ -9,6 +9,8 @@ import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
 import Planet from './Planet'
 import BlackHole from './BlackHole'
+import DeepSky from './DeepSky'
+import { DEEPSKY } from '../data/textures'
 
 function coreRadius(b: CelestialBody): number {
   if (b.id === 'sun') return 1.15
@@ -64,6 +66,8 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
         <Planet body={body} core={core} />
       ) : body.kind === 'blackhole' || body.kind === 'quasar' ? (
         <BlackHole core={core} quasar={body.kind === 'quasar'} />
+      ) : DEEPSKY.has(body.id) ? (
+        <DeepSky body={body} core={core} />
       ) : (
         <>
           {/* soft glow */}
@@ -90,8 +94,12 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
         </>
       )}
 
-      {/* selected / stop halo — only for distant deep-sky markers, not close-up planets */}
-      {(isSelected || isStop) && body.region !== 'solar' && (
+      {/* selection halo only for point-like markers (stars/exoplanets), not bodies with rich visuals */}
+      {(isSelected || isStop) &&
+        body.region !== 'solar' &&
+        body.kind !== 'blackhole' &&
+        body.kind !== 'quasar' &&
+        !DEEPSKY.has(body.id) && (
         <Billboard>
           <mesh ref={haloRef}>
             <ringGeometry args={[core * 1.7, core * 1.95, 48]} />

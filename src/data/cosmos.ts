@@ -22,11 +22,23 @@ function place(raw: Raw): Pick<CelestialBody, 'realPos' | 'scenePos' | 'distance
   const u = raDecToUnit(raw.ra ?? 0, raw.dec ?? 0)
   const distanceLy = raw.distanceLy ?? 0
   const r = lyToSceneRadius(distanceLy)
+  // small deterministic scene-space offset so co-located objects (e.g. M87 / Virgo / 3C 273) don't stack
+  const j = jitter(raw.id)
   return {
     realPos: [u[0] * distanceLy, u[1] * distanceLy, u[2] * distanceLy],
-    scenePos: [u[0] * r, u[1] * r, u[2] * r],
+    scenePos: [u[0] * r + j[0], u[1] * r + j[1], u[2] * r + j[2]],
     distanceLy,
   }
+}
+
+function jitter(id: string): [number, number, number] {
+  let h = 2166136261
+  for (let i = 0; i < id.length; i++) h = Math.imul(h ^ id.charCodeAt(i), 16777619)
+  const a = ((h >>> 0) % 1000) / 1000
+  const b = ((h >>> 10) % 1000) / 1000
+  const c = ((h >>> 20) % 1000) / 1000
+  const m = 1.8
+  return [(a - 0.5) * 2 * m, (b - 0.5) * 2 * m, (c - 0.5) * 2 * m]
 }
 
 /** Two-pass assembly so moons can be placed relative to their parent planet. */

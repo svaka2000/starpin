@@ -2,26 +2,25 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { getBody } from '../data/cosmos'
 import { compact, describeDistance, lightTravelLabel } from '../lib/astro'
-import { TEXTURES } from '../data/textures'
+import { DEEPSKY, TEXTURES } from '../data/textures'
 import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
 import { Plus, Rocket, X } from './icons'
 
 function HeroThumb({ body }: { body: CelestialBody }) {
   const [failed, setFailed] = useState(false)
-  const hasRender = Boolean(TEXTURES[body.id]) && !failed
+  const src = TEXTURES[body.id]
+    ? `/renders/${body.id}.png`
+    : DEEPSKY.has(body.id)
+    ? `/textures/deepsky/${body.id}.jpg`
+    : null
   return (
     <div
       className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-xl text-2xl"
       style={{ background: `${body.color}22`, boxShadow: `0 0 26px -6px ${body.color}` }}
     >
-      {hasRender ? (
-        <img
-          src={`/renders/${body.id}.png`}
-          alt={body.name}
-          className="h-full w-full object-cover"
-          onError={() => setFailed(true)}
-        />
+      {src && !failed ? (
+        <img src={src} alt={body.name} className="h-full w-full object-cover" onError={() => setFailed(true)} />
       ) : (
         body.emoji
       )}
