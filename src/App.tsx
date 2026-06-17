@@ -8,6 +8,7 @@ import VoyagePanel from './ui/VoyagePanel'
 import Inspector from './ui/Inspector'
 import Onboarding from './ui/Onboarding'
 import Loader from './ui/Loader'
+import IntroCarousel from './ui/IntroCarousel'
 import { buildShareUrl, parseShareUrl } from './lib/exporters'
 import { audio } from './lib/audio'
 import { useVoyage } from './store/useVoyage'
@@ -25,18 +26,13 @@ export default function App() {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [introReady, setIntroReady] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<number | undefined>(undefined)
 
-  // brief branded loader, then let the cinematic fly-in play before the modal appears
+  // brief branded loader, then hand off to the intro carousel (first visit) or the app
   useEffect(() => {
-    const t1 = window.setTimeout(() => setLoading(false), 1300)
-    const t2 = window.setTimeout(() => setIntroReady(true), 3600)
-    return () => {
-      window.clearTimeout(t1)
-      window.clearTimeout(t2)
-    }
+    const t = window.setTimeout(() => setLoading(false), 1300)
+    return () => window.clearTimeout(t)
   }, [])
 
   // audio: resume if previously enabled, and play sfx on select / add
@@ -70,10 +66,10 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // One-time controls hint.
+  // One-time controls hint — only for returning visitors (first-timers get it after the intro).
   const hinted = useRef(false)
   useEffect(() => {
-    if (hinted.current) return
+    if (hinted.current || !useVoyage.getState().seenOnboarding) return
     hinted.current = true
     const t = window.setTimeout(() => showToast('Drag to orbit · scroll to zoom · click any world to pin it'), 1400)
     return () => window.clearTimeout(t)
@@ -103,10 +99,16 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing])
 
-  const onboardingOpen = (!seenOnboarding && introReady) || menuOpen
+  const onboardingOpen = menuOpen // first-run uses the intro carousel; modal is the re-openable picker
+  const showIntro = !seenOnboarding && !loading
   const closeOnboarding = () => {
     dismissOnboarding()
     setMenuOpen(false)
+  }
+  const finishIntro = (stops?: string[]) => {
+    if (stops && stops.length) setStops(stops)
+    dismissOnboarding()
+    window.setTimeout(() => showToast('Drag to orbit · scroll to zoom · click any world to pin it'), 700)
   }
 
   const onShare = async () => {
@@ -142,6 +144,8 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <IntroCarousel open={showIntro} onFinish={finishIntro} />
 
       <AnimatePresence>{loading && <Loader />}</AnimatePresence>
     </div>
