@@ -84,3 +84,6 @@ export const Volume = (p: SVGProps<SVGSVGElement>) => (
 export const VolumeOff = (p: SVGProps<SVGSVGElement>) => (
   <svg {...base(p)}><path d="M4 9v6h4l5 4V5L8 9H4Z" /><path d="m17 9 4 4m0-4-4 4" /></svg>
 )
+export const Music = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}><path d="M9 18V5l11-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="17" cy="16" r="3" /></svg>
+)

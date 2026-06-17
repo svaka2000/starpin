@@ -28,7 +28,10 @@ to the edge of the observable universe.
 ## 🚀 Features
 
 - **Cinematic deep space** — real‑time bloom, a vignette and the genuine ESO Milky Way panorama as a skybox,
-  with a fly‑in intro from deep space and an optional procedural ambient soundtrack.
+  with a fly‑in intro from deep space and a cinematic first‑visit carousel.
+- **Bring your own soundtrack** — a Sound panel with free ambient **space radio** (incl. a live NASA
+  mission‑audio station), **Spotify** (paste any playlist/track, or pick a curated one — official embed), and
+  a built‑in **generative** synth drone.
 - **Photoreal planets** — every world uses real NASA/CC surface maps. Earth has drifting clouds, glowing
   night‑side cities, ocean specular and a blue atmosphere; Saturn has its rings; the gas giants their bands;
   each planet its true axial tilt. Fly up to one and it looks *real*.
@@ -120,6 +123,7 @@ public/textures/, public/renders/
   Library (`blender/fetch_deepsky.py`). Milky Way skybox: ESO/S. Brunier panorama (CC‑BY 4.0).
 - Scale concept inspired by Cary & Michael Huang's [Scale of the Universe 2](https://htwins.net/scale2/).
 - Astronomical data: NASA, ESA/Gaia, SIMBAD, the NASA Exoplanet Archive.
+- Soundtrack: ambient radio by [SomaFM](https://somafm.com) (free & commercial-free), and Spotify playback via Spotify's embed player.
 
 ## 📝 License
 

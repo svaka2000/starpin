@@ -9,6 +9,7 @@ import Inspector from './ui/Inspector'
 import Onboarding from './ui/Onboarding'
 import Loader from './ui/Loader'
 import IntroCarousel from './ui/IntroCarousel'
+import MusicPanel from './ui/MusicPanel'
 import { buildShareUrl, parseShareUrl } from './lib/exporters'
 import { audio } from './lib/audio'
 import { useVoyage } from './store/useVoyage'
@@ -25,6 +26,7 @@ export default function App() {
   const focus = useVoyage((s) => s.focus)
 
   const [menuOpen, setMenuOpen] = useState(false)
+  const [soundOpen, setSoundOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef<number | undefined>(undefined)
@@ -127,10 +129,11 @@ export default function App() {
         {view === 'scale' ? <ScaleMode /> : view === 'sky' ? <SkyChart /> : <CosmosScene />}
       </div>
 
-      <Toolbar onVoyages={() => setMenuOpen(true)} onShare={onShare} />
+      <Toolbar onVoyages={() => setMenuOpen(true)} onShare={onShare} onSound={() => setSoundOpen(true)} />
       {view !== 'scale' && <VoyagePanel />}
       {view !== 'scale' && <Inspector />}
       <Onboarding open={onboardingOpen} onClose={closeOnboarding} />
+      <MusicPanel open={soundOpen} onClose={() => setSoundOpen(false)} />
 
       <AnimatePresence>
         {toast && (
