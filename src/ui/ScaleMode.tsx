@@ -384,7 +384,7 @@ export default function ScaleMode() {
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-ink" onWheel={(e) => setTarget(target.current + e.deltaY * 0.0016)}>
-      <Canvas camera={{ position: [0, 0, 7], fov: 50, near: 0.01, far: 4000 }} dpr={[1, 2]} gl={{ antialias: true }}>
+      <Canvas camera={{ position: [0, 0, 7], fov: 50, near: 0.01, far: 4000 }} dpr={[1, 2]} gl={{ antialias: true, toneMapping: THREE.NoToneMapping }}>
         <Scene p={p} />
       </Canvas>
 

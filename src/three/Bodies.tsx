@@ -4,7 +4,7 @@ import { Billboard, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { COSMOS } from '../data/cosmos'
 import { auToSceneRadius } from '../lib/astro'
-import { glowTexture } from '../lib/textures'
+import { glowTexture, spikeTexture } from '../lib/textures'
 import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
 import Planet from './Planet'
@@ -68,29 +68,28 @@ function Pin({ body, hovered, onHover }: { body: CelestialBody; hovered: boolean
         <BlackHole core={core} quasar={body.kind === 'quasar'} />
       ) : DEEPSKY.has(body.id) ? (
         <DeepSky body={body} core={core} />
+      ) : body.kind === 'void' ? (
+        <mesh ref={coreRef}>
+          <sphereGeometry args={[core * 1.6, 24, 24]} />
+          <meshBasicMaterial color={body.color} transparent opacity={0.16} depthWrite={false} />
+        </mesh>
       ) : (
         <>
-          {/* soft glow */}
-          <sprite scale={[core * 4.2 + 0.6, core * 4.2 + 0.6, 1]}>
-            <spriteMaterial
-              map={glowTexture(body.color)}
-              transparent
-              opacity={0.85}
-              depthWrite={false}
-              blending={THREE.AdditiveBlending}
-            />
-          </sprite>
-          {/* core body */}
+          {/* crisp bright core */}
           <mesh ref={coreRef}>
-            <sphereGeometry args={[core, 28, 28]} />
-            <meshStandardMaterial
-              color={body.color}
-              emissive={body.color}
-              emissiveIntensity={0.9}
-              roughness={0.55}
-              metalness={0.1}
-            />
+            <sphereGeometry args={[core * (body.kind === 'star' ? 0.5 : 0.7), 20, 20]} />
+            <meshBasicMaterial color={body.color} toneMapped={false} />
           </mesh>
+          {/* tight glow */}
+          <sprite scale={[core * (body.kind === 'star' ? 2.2 : 1.8), core * (body.kind === 'star' ? 2.2 : 1.8), 1]}>
+            <spriteMaterial map={glowTexture(body.color)} transparent opacity={body.kind === 'star' ? 0.6 : 0.42} depthWrite={false} blending={THREE.AdditiveBlending} />
+          </sprite>
+          {/* diffraction spikes for true stars */}
+          {body.kind === 'star' && (
+            <sprite scale={[core * 6, core * 6, 1]}>
+              <spriteMaterial map={spikeTexture()} color={body.color} transparent opacity={0.5} depthWrite={false} blending={THREE.AdditiveBlending} />
+            </sprite>
+          )}
         </>
       )}
 

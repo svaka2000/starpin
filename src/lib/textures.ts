@@ -32,6 +32,39 @@ export function glowTexture(color = '#ffffff'): THREE.Texture {
   return tex
 }
 
+/** Diffraction-spike star sprite (soft core + 4-point cross), for bright stars. */
+export function spikeTexture(): THREE.Texture {
+  const key = '__spike'
+  if (cache.has(key)) return cache.get(key)!
+  const s = 128
+  const c = document.createElement('canvas')
+  c.width = c.height = s
+  const x = c.getContext('2d')!
+  const g = x.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2)
+  g.addColorStop(0, 'rgba(255,255,255,1)')
+  g.addColorStop(0.12, 'rgba(255,255,255,0.6)')
+  g.addColorStop(0.45, 'rgba(255,255,255,0)')
+  x.fillStyle = g
+  x.fillRect(0, 0, s, s)
+  x.globalCompositeOperation = 'lighter'
+  const vg = x.createLinearGradient(0, 0, 0, s)
+  vg.addColorStop(0, 'rgba(255,255,255,0)')
+  vg.addColorStop(0.5, 'rgba(255,255,255,0.85)')
+  vg.addColorStop(1, 'rgba(255,255,255,0)')
+  x.fillStyle = vg
+  x.fillRect(s / 2 - 1, 0, 2, s)
+  const hg = x.createLinearGradient(0, 0, s, 0)
+  hg.addColorStop(0, 'rgba(255,255,255,0)')
+  hg.addColorStop(0.5, 'rgba(255,255,255,0.85)')
+  hg.addColorStop(1, 'rgba(255,255,255,0)')
+  x.fillStyle = hg
+  x.fillRect(0, s / 2 - 1, s, 2)
+  const t = new THREE.CanvasTexture(c)
+  t.needsUpdate = true
+  cache.set(key, t)
+  return t
+}
+
 /** Small round star texture for the background field. */
 export function starTexture(): THREE.Texture {
   const key = '__star'

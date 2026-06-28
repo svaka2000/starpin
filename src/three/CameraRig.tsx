@@ -34,16 +34,31 @@ export default function CameraRig() {
     if (body && !viewChanged) {
       const tgt = new THREE.Vector3(...body.scenePos)
       const len = tgt.length()
-      const dir = len > 0.01 ? tgt.clone().normalize() : new THREE.Vector3(0, 0.4, 1).normalize()
+      const core = body.id === 'sun' ? 1.15 : THREE.MathUtils.clamp(body.size * 0.5, 0.14, 0.95)
+      const isSolarPlanet = body.region === 'solar' && body.id !== 'sun'
+
       let viewDist: number
+      let dir: THREE.Vector3
       if (DEEPSKY.has(body.id)) {
-        viewDist = THREE.MathUtils.clamp(body.size * 6, 4, 9) * 1.75 // frame the large image billboards
+        viewDist = THREE.MathUtils.clamp(body.size * 6, 4, 9) * 1.75
+        dir = len > 0.01 ? tgt.clone().normalize() : new THREE.Vector3(0, 0.4, 1).normalize()
       } else if (body.kind === 'blackhole' || body.kind === 'quasar') {
         viewDist = 7
+        dir = len > 0.01 ? tgt.clone().normalize() : new THREE.Vector3(0, 0.4, 1).normalize()
+      } else if (isSolarPlanet && len > 0.5) {
+        // view the sunlit (gibbous) face — sun stays off-frame
+        viewDist = THREE.MathUtils.clamp(core * 8, 2.2, 6)
+        const sunward = tgt.clone().negate().normalize()
+        let tangent = new THREE.Vector3(0, 1, 0).cross(sunward)
+        if (tangent.lengthSq() < 0.001) tangent.set(1, 0, 0)
+        tangent.normalize()
+        const a = 0.92
+        dir = sunward.multiplyScalar(Math.cos(a)).add(tangent.multiplyScalar(Math.sin(a))).normalize()
       } else {
         viewDist = THREE.MathUtils.clamp(2.6 + body.size * 2.4, 3, 8)
+        dir = len > 0.01 ? tgt.clone().normalize() : new THREE.Vector3(0, 0.4, 1).normalize()
       }
-      const cam = tgt.clone().add(dir.multiplyScalar(viewDist)).add(new THREE.Vector3(0, viewDist * 0.4, 0))
+      const cam = tgt.clone().add(dir.multiplyScalar(viewDist)).add(new THREE.Vector3(0, viewDist * 0.28, 0))
       desiredTgt.current.copy(tgt)
       desiredCam.current.copy(cam)
     } else {

@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
+import * as THREE from 'three'
 import Starfield from './Starfield'
 import Bodies from './Bodies'
 import VoyageRoute from './VoyageRoute'
@@ -13,13 +14,13 @@ export default function CosmosScene() {
     <Canvas
       camera={{ position: [0, 44, 150], fov: 55, near: 0.1, far: 6000 }}
       dpr={[1, 2]}
-      gl={{ antialias: true, powerPreference: 'high-performance' }}
+      gl={{ antialias: true, powerPreference: 'high-performance', toneMapping: THREE.NoToneMapping }}
       onPointerMissed={() => useVoyage.getState().select(null)}
     >
-      <color attach="background" args={['#05060c']} />
-      <ambientLight intensity={0.13} />
-      <hemisphereLight args={['#7f9cff', '#0a0c18', 0.18]} />
-      <pointLight position={[0, 0, 0]} intensity={3.2} decay={0} color="#fff3d6" />
+      <color attach="background" args={['#01020a']} />
+      <ambientLight intensity={0.06} />
+      <hemisphereLight args={['#4a5a8c', '#05060c', 0.1]} />
+      <pointLight position={[0, 0, 0]} intensity={4.2} decay={0} color="#fff4df" />
       <Starfield />
       <Suspense fallback={null}>
         <Bodies />
