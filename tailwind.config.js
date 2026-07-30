@@ -5,16 +5,22 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       colors: {
-        ink: '#05060c',
-        panel: 'rgba(11, 14, 26, 0.72)',
-        stardust: '#8ab4ff',
-        nova: '#a78bfa',
-        ember: '#ff7a59',
-        gold: '#ffd479',
+        ink: '#06070c',
+        panel: 'rgba(20, 19, 24, 0.82)',
+        // single warm accent (was blue #8ab4ff) — flows through every text/bg/ring-stardust usage
+        stardust: '#f1b85e',
+        gold: '#f8cd86',
+        // de-violeted: nova was #a78bfa; now a warm neutral so legacy usages read calm, not purple
+        nova: '#b0a89c',
+        ember: '#ff7f5e',
+        // warm editorial neutrals
+        parchment: '#f3f1ea',
+        hush: '#a9a49b',
+        faint: '#77726a',
       },
       backdropBlur: {
         xs: '2px',
