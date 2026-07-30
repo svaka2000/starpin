@@ -5,7 +5,7 @@ import { compact, describeDistance, lightTravelLabel } from '../lib/astro'
 import { DEEPSKY, TEXTURES } from '../data/textures'
 import { useVoyage } from '../store/useVoyage'
 import type { CelestialBody } from '../types'
-import { Plus, Rocket, X } from './icons'
+import { Plus, X } from './icons'
 
 function HeroThumb({ body }: { body: CelestialBody }) {
   const [failed, setFailed] = useState(false)
@@ -16,23 +16,14 @@ function HeroThumb({ body }: { body: CelestialBody }) {
     : null
   return (
     <div
-      className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-xl text-2xl"
-      style={{ background: `${body.color}22`, boxShadow: `0 0 26px -6px ${body.color}` }}
+      className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl text-2xl ring-1 ring-white/10"
+      style={{ background: `${body.color}1f`, boxShadow: `0 0 30px -10px ${body.color}` }}
     >
       {src && !failed ? (
         <img src={src} alt={body.name} className="h-full w-full object-cover" onError={() => setFailed(true)} />
       ) : (
         body.emoji
       )}
-    </div>
-  )
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg bg-white/[0.04] px-2.5 py-1.5 ring-1 ring-white/8">
-      <div className="text-[10px] uppercase tracking-wide text-slate-500">{label}</div>
-      <div className="text-[13px] font-semibold text-slate-100">{value}</div>
     </div>
   )
 }
@@ -64,86 +55,85 @@ export default function Inspector() {
 
   const body = selectedId ? getBody(selectedId) : undefined
   const inVoyage = body ? stops.includes(body.id) : false
+  const rows = body ? stats(body) : []
 
   return (
     <AnimatePresence>
       {body && (
         <motion.div
           key={body.id}
-          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          initial={{ opacity: 0, y: 22, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 16, scale: 0.97 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-          className="glass fixed bottom-3 left-3 z-20 w-[340px] max-w-[calc(100vw-24px)] overflow-hidden rounded-2xl shadow-2xl"
+          exit={{ opacity: 0, y: 14, scale: 0.98 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+          className="glass fixed bottom-3 left-3 z-20 w-[352px] max-w-[calc(100vw-24px)] overflow-hidden rounded-2xl"
         >
           <div
-            className="relative px-4 pb-4 pt-4"
-            style={{
-              background: `radial-gradient(120% 90% at 0% 0%, ${body.color}22 0%, transparent 60%)`,
-            }}
+            className="relative px-5 pb-5 pt-5"
+            style={{ background: `radial-gradient(130% 100% at 0% 0%, ${body.color}1c 0%, transparent 62%)` }}
           >
             <button
               onClick={() => select(null)}
-              className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-full text-slate-400 transition hover:bg-white/10 hover:text-white"
+              className="absolute right-3.5 top-3.5 grid h-7 w-7 place-items-center rounded-full text-faint transition hover:bg-white/10 hover:text-parchment"
               aria-label="Close"
             >
               <X width={15} height={15} />
             </button>
 
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3.5">
               <HeroThumb body={body} />
-              <div className="min-w-0 pr-6">
-                <h3 className="font-display text-lg font-bold leading-tight text-white">{body.name}</h3>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-400">{body.kindLabel}</span>
+              <div className="min-w-0 pr-6 pt-0.5">
+                <h3 className="font-display text-[22px] font-semibold leading-[1.1] text-parchment balance">{body.name}</h3>
+                <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-faint">{body.kindLabel}</div>
+                <div className="mt-2 flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-stardust" />
+                  <span className="text-[11px] font-medium uppercase tracking-[0.12em] text-stardust/90">{body.vibe}</span>
                 </div>
-                <span className="mt-1 inline-block rounded-full bg-nova/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-nova">
-                  {body.vibe}
-                </span>
               </div>
             </div>
 
-            <ul className="mt-3 space-y-1.5">
+            <ul className="mt-4 space-y-2">
               {body.facts.map((f, i) => (
-                <li key={i} className="flex gap-2 text-[13px] leading-snug text-slate-300">
-                  <span className="mt-0.5 text-stardust">›</span>
-                  <span>{f}</span>
+                <li key={i} className="relative pl-3.5 text-[13px] leading-relaxed text-hush">
+                  <span className="absolute left-0 top-[7px] h-[11px] w-[2px] rounded-full bg-stardust/70" />
+                  {f}
                 </li>
               ))}
             </ul>
 
-            {stats(body).length > 0 && (
-              <div className="mt-3 grid grid-cols-2 gap-1.5">
-                {stats(body).map((s) => (
-                  <Stat key={s.label} {...s} />
+            {rows.length > 0 && (
+              <dl className="mt-4 border-y border-white/[0.07]">
+                {rows.map((s, i) => (
+                  <div
+                    key={s.label}
+                    className={`flex items-baseline justify-between py-[7px] ${i > 0 ? 'border-t border-white/[0.05]' : ''}`}
+                  >
+                    <dt className="text-[11px] uppercase tracking-[0.13em] text-faint">{s.label}</dt>
+                    <dd className="font-mono tnum text-[13px] font-medium text-parchment">{s.value}</dd>
+                  </div>
                 ))}
-              </div>
+              </dl>
             )}
 
-            <div className="mt-3 flex items-center gap-2">
+            <div className="mt-4">
               {inVoyage ? (
                 <button
                   onClick={() => removeStop(body.id)}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-white/[0.06] px-3 py-2.5 text-sm font-semibold text-slate-200 ring-1 ring-white/12 transition hover:bg-rose-500/15 hover:text-rose-200"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-white/[0.05] px-3 py-2.5 text-sm font-medium text-hush ring-1 ring-white/10 transition hover:text-ember hover:ring-ember/30"
                 >
                   <X width={15} height={15} /> Remove from voyage
                 </button>
               ) : (
                 <button
                   onClick={() => addStop(body.id)}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-stardust px-3 py-2.5 text-sm font-semibold text-slate-950 shadow-lg transition hover:brightness-110"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-stardust px-3 py-2.5 text-sm font-semibold text-[#241a0b] transition hover:brightness-[1.06]"
                 >
                   <Plus width={15} height={15} /> Add to voyage
                 </button>
               )}
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/[0.04] text-slate-400 ring-1 ring-white/10">
-                <Rocket width={16} height={16} />
-              </span>
             </div>
 
-            {body.source && (
-              <p className="mt-2.5 text-[10px] text-slate-600">Data: {body.source}</p>
-            )}
+            {body.source && <p className="mt-3 text-[10px] uppercase tracking-[0.12em] text-faint">Data · {body.source}</p>}
           </div>
         </motion.div>
       )}

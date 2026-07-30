@@ -27,8 +27,10 @@ function TIcon({
       onClick={onClick}
       title={label}
       aria-label={label}
-      className={`grid h-9 w-9 place-items-center rounded-xl transition ${
-        active ? 'bg-stardust/20 text-white ring-1 ring-stardust/40' : 'text-slate-300 hover:bg-white/10 hover:text-white'
+      className={`grid h-9 w-9 place-items-center rounded-lg transition ${
+        active
+          ? 'bg-stardust/15 text-stardust ring-1 ring-stardust/30'
+          : 'text-hush hover:bg-white/[0.06] hover:text-parchment'
       }`}
     >
       {children}
@@ -61,30 +63,32 @@ export default function Toolbar({ onVoyages, onShare, onSound }: { onVoyages: ()
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-center px-3 pt-3">
-      <div className="glass pointer-events-auto flex max-w-[min(980px,96vw)] items-center gap-2 rounded-2xl px-2.5 py-2 shadow-2xl">
+      <div className="glass pointer-events-auto flex max-w-[min(1000px,96vw)] items-center gap-2 rounded-2xl px-2.5 py-2">
         {/* brand */}
-        <div className="flex shrink-0 items-center gap-2 pl-1 pr-1">
+        <div className="flex shrink-0 items-center gap-2 pl-1 pr-0.5">
           <img src="/favicon.svg" alt="Starpin" className="h-6 w-6" />
-          <span className="hidden font-display text-[15px] font-semibold tracking-wide text-white sm:block">Starpin</span>
+          <span className="hidden font-display text-[17px] font-semibold tracking-tight text-parchment sm:block">
+            Starpin
+          </span>
         </div>
 
-        <div className="h-7 w-px bg-white/10" />
+        <div className="mx-0.5 h-6 w-px bg-white/10" />
 
         {/* search */}
         <div className="relative">
-          <div className="flex items-center gap-2 rounded-xl bg-white/[0.06] px-2.5 py-1.5 ring-1 ring-white/10 focus-within:ring-stardust/40">
-            <Search width={16} height={16} className="text-slate-400" />
+          <div className="flex items-center gap-2 rounded-lg bg-white/[0.045] px-2.5 py-1.5 ring-1 ring-white/[0.08] transition focus-within:ring-stardust/45">
+            <Search width={15} height={15} className="text-faint" />
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
               onFocus={() => setFocused(true)}
               onBlur={() => setTimeout(() => setFocused(false), 150)}
               placeholder="Search the cosmos…"
-              className="w-36 bg-transparent text-sm text-white placeholder:text-slate-500 focus:outline-none sm:w-48"
+              className="w-36 bg-transparent text-sm text-parchment placeholder:text-faint focus:outline-none sm:w-44"
             />
           </div>
           {focused && results.length > 0 && (
-            <div className="glass absolute left-0 top-12 max-h-80 w-72 overflow-auto rounded-xl p-1.5 shadow-2xl scroll-thin">
+            <div className="glass absolute left-0 top-12 max-h-80 w-72 overflow-auto rounded-xl p-1.5 scroll-thin">
               {results.map((b) => (
                 <button
                   key={b.id}
@@ -92,12 +96,12 @@ export default function Toolbar({ onVoyages, onShare, onSound }: { onVoyages: ()
                     select(b.id)
                     setQ('')
                   }}
-                  className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-white/10"
+                  className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-white/[0.06]"
                 >
-                  <span className="text-lg">{b.emoji}</span>
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-white/[0.05] text-base">{b.emoji}</span>
                   <span className="min-w-0">
-                    <span className="block truncate text-sm font-medium text-white">{b.name}</span>
-                    <span className="block truncate text-xs text-slate-400">{b.kindLabel}</span>
+                    <span className="block truncate text-sm font-medium text-parchment">{b.name}</span>
+                    <span className="block truncate text-[11px] text-faint">{b.kindLabel}</span>
                   </span>
                 </button>
               ))}
@@ -107,7 +111,7 @@ export default function Toolbar({ onVoyages, onShare, onSound }: { onVoyages: ()
 
         <button
           onClick={takeMeSomewhere}
-          className="hidden shrink-0 items-center gap-2 rounded-xl bg-white/[0.06] px-3 py-1.5 text-sm font-medium text-slate-200 ring-1 ring-white/10 transition hover:bg-white/10 hover:text-white md:flex"
+          className="hidden shrink-0 items-center gap-2 rounded-lg bg-white/[0.045] px-3 py-1.5 text-sm font-medium text-hush ring-1 ring-white/[0.08] transition hover:bg-white/[0.08] hover:text-parchment md:flex"
         >
           <Shuffle width={15} height={15} />
           <span>Take me somewhere</span>
@@ -115,27 +119,30 @@ export default function Toolbar({ onVoyages, onShare, onSound }: { onVoyages: ()
 
         <div className="ml-auto flex items-center gap-1">
           {/* view segmented */}
-          <div className="mr-1 flex items-center gap-0.5 rounded-xl bg-white/[0.05] p-0.5 ring-1 ring-white/10">
-            {VIEWS.map((v) => (
-              <button
-                key={v.id}
-                onClick={() => setView(v.id)}
-                title={v.label}
-                className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition ${
-                  view === v.id ? 'bg-stardust/25 text-white' : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <v.Icon width={15} height={15} />
-                <span className="hidden lg:block">{v.label}</span>
-              </button>
-            ))}
+          <div className="mr-1 flex items-center gap-0.5 rounded-xl bg-black/25 p-0.5 ring-1 ring-white/[0.07]">
+            {VIEWS.map((v) => {
+              const active = view === v.id
+              return (
+                <button
+                  key={v.id}
+                  onClick={() => setView(v.id)}
+                  title={v.label}
+                  className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition ${
+                    active ? 'bg-stardust text-[#241a0b] shadow-sm' : 'text-hush hover:text-parchment'
+                  }`}
+                >
+                  <v.Icon width={15} height={15} />
+                  <span className="hidden lg:block">{v.label}</span>
+                </button>
+              )
+            })}
           </div>
 
           <button
             onClick={takeMeSomewhere}
             title="Take me somewhere"
             aria-label="Take me somewhere"
-            className="grid h-9 w-9 place-items-center rounded-xl text-slate-300 transition hover:bg-white/10 hover:text-white md:hidden"
+            className="grid h-9 w-9 place-items-center rounded-lg text-hush transition hover:bg-white/[0.06] hover:text-parchment md:hidden"
           >
             <Shuffle width={17} height={17} />
           </button>
