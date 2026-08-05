@@ -87,7 +87,7 @@ const RAW: Raw[] = [
   {
     id: 'venus', name: 'Venus', emoji: '🟠', kind: 'planet', kindLabel: 'Rocky planet',
     region: 'solar', au: 0.723, lonDeg: 68, color: '#e8cda0', size: 0.62, vibe: 'Greenhouse',
-    facts: ['Hottest planet — a crushing CO₂ blanket bakes it to 465°C.', 'Spins backwards; one day is longer than its year.'],
+    facts: ['Hottest planet, a crushing CO₂ blanket bakes it to 465°C.', 'Spins backwards; one day is longer than its year.'],
     diameterKm: 12104, gravityG: 0.91, dayLengthHours: 2802, tempC: 464, source: 'NASA',
   },
   {
@@ -100,7 +100,7 @@ const RAW: Raw[] = [
     id: 'moon', name: 'The Moon', emoji: '🌕', kind: 'moon', kindLabel: 'Earth’s moon',
     region: 'solar', parentId: 'earth', parentDistKm: 384400, lonDeg: 35, color: '#cfcfd6', size: 0.26,
     vibe: 'Our companion',
-    facts: ['384,400 km away — 1.3 light-seconds.', 'Artemis aims to return humans here this decade.'],
+    facts: ['384,400 km away, 1.3 light-seconds.', 'Artemis aims to return humans here this decade.'],
     diameterKm: 3475, gravityG: 0.166, dayLengthHours: 708.7, tempC: -20, source: 'NASA Artemis',
   },
   {
@@ -124,7 +124,7 @@ const RAW: Raw[] = [
   {
     id: 'europa', name: 'Europa', emoji: '🧊', kind: 'moon', kindLabel: 'Icy moon of Jupiter',
     region: 'solar', parentId: 'jupiter', parentDistKm: 671100, lonDeg: 60, color: '#d8d0bf', size: 0.3, vibe: 'Ocean moon',
-    facts: ['A salty ocean hides beneath its icy crust — a top hunt for life.', 'NASA’s Europa Clipper is en route to survey it.'],
+    facts: ['A salty ocean hides beneath its icy crust, a top hunt for life.', 'NASA’s Europa Clipper is en route to survey it.'],
     diameterKm: 3122, gravityG: 0.134, source: 'NASA Europa Clipper',
   },
   {
@@ -136,7 +136,7 @@ const RAW: Raw[] = [
   {
     id: 'titan', name: 'Titan', emoji: '🟤', kind: 'moon', kindLabel: 'Largest moon of Saturn',
     region: 'solar', parentId: 'saturn', parentDistKm: 1221870, lonDeg: 205, color: '#d9a23f', size: 0.34, vibe: 'Methane seas',
-    facts: ['The only moon with a thick atmosphere — and liquid rivers & lakes.', 'But the rain is methane, not water.'],
+    facts: ['The only moon with a thick atmosphere, and liquid rivers & lakes.', 'But the rain is methane, not water.'],
     diameterKm: 5150, gravityG: 0.14, source: 'NASA Dragonfly',
   },
   {
@@ -148,13 +148,13 @@ const RAW: Raw[] = [
   {
     id: 'uranus', name: 'Uranus', emoji: '🔵', kind: 'planet', kindLabel: 'Ice giant',
     region: 'solar', au: 19.19, lonDeg: 150, color: '#9fe7e3', size: 0.9, vibe: 'Tilted ice giant',
-    facts: ['Rolls on its side at a 98° tilt — seasons last 21 years.', 'Visited once, by Voyager 2 in 1986.'],
+    facts: ['Rolls on its side at a 98° tilt, seasons last 21 years.', 'Visited once, by Voyager 2 in 1986.'],
     diameterKm: 50724, gravityG: 0.89, dayLengthHours: 17.2, tempC: -195, source: 'NASA',
   },
   {
     id: 'neptune', name: 'Neptune', emoji: '🔵', kind: 'planet', kindLabel: 'Ice giant',
     region: 'solar', au: 30.07, lonDeg: 250, color: '#5b78ff', size: 0.88, vibe: 'Wind world',
-    facts: ['Supersonic winds reach 2,100 km/h — fastest in the Solar System.', 'The farthest major planet from the Sun.'],
+    facts: ['Supersonic winds reach 2,100 km/h, fastest in the Solar System.', 'The farthest major planet from the Sun.'],
     diameterKm: 49244, gravityG: 1.14, dayLengthHours: 16, tempC: -200, source: 'NASA',
   },
   {
@@ -169,21 +169,21 @@ const RAW: Raw[] = [
     id: 'iss', name: 'ISS', emoji: '🛰️', kind: 'probe', kindLabel: 'Space station',
     region: 'solar', parentId: 'earth', parentDistKm: 408, lonDeg: 150, color: '#dfe8ff', size: 0.16,
     vibe: 'Home in orbit',
-    facts: ['Circles Earth every 90 minutes at 28,000 km/h — 16 sunrises a day.', 'Humans have lived aboard continuously since 2000.'],
+    facts: ['Circles Earth every 90 minutes at 28,000 km/h, 16 sunrises a day.', 'Humans have lived aboard continuously since 2000.'],
     source: 'NASA',
   },
   {
     id: 'halley', name: "Halley's Comet", emoji: '☄️', kind: 'comet', kindLabel: 'Periodic comet',
     region: 'solar', au: 17.8, lonDeg: 318, color: '#bfe6ff', size: 0.26,
     vibe: 'Returns 2061',
-    facts: ['Sweeps past Earth every ~76 years; last seen 1986.', 'Its next return — July 2061 — may be your once-in-a-lifetime comet.'],
+    facts: ['Sweeps past Earth every ~76 years; last seen 1986.', 'Its next return, July 2061, may be your once-in-a-lifetime comet.'],
     source: 'NASA',
   },
   {
     id: 'voyager-1', name: 'Voyager 1', emoji: '📡', kind: 'probe', kindLabel: 'Interstellar probe',
     region: 'solar', au: 165, lonDeg: 72, color: '#cfd6e6', size: 0.2,
     vibe: 'Farthest human object',
-    facts: ['Launched 1977; crossed into interstellar space in 2012.', 'Carries the Golden Record — a message from humanity to the stars.'],
+    facts: ['Launched 1977; crossed into interstellar space in 2012.', 'Carries the Golden Record, a message from humanity to the stars.'],
     source: 'NASA JPL',
   },
   {
@@ -227,7 +227,7 @@ const RAW: Raw[] = [
     id: 'vega', name: 'Vega', emoji: '🌟', kind: 'star', kindLabel: 'A-type star · Lyra',
     region: 'deep', ra: 18.616, dec: 38.784, distanceLy: 25.04, color: '#dbe7ff', size: 0.85,
     vibe: 'Summer beacon',
-    facts: ['Once the North Star — and will be again in ~12,000 years.', 'Ringed by a dusty debris disk.'],
+    facts: ['Once the North Star, and will be again in ~12,000 years.', 'Ringed by a dusty debris disk.'],
     source: 'Hipparcos',
   },
   {
@@ -241,7 +241,7 @@ const RAW: Raw[] = [
     id: 'betelgeuse', name: 'Betelgeuse', emoji: '🔴', kind: 'star', kindLabel: 'Red supergiant · Orion',
     region: 'deep', ra: 5.919, dec: 7.407, distanceLy: 548, color: '#ff6b5a', size: 1.2,
     vibe: 'Doomed supergiant',
-    facts: ['So huge it would swallow Jupiter’s orbit.', 'Will explode as a supernova — sometime in the next 100,000 years.'],
+    facts: ['So huge it would swallow Jupiter’s orbit.', 'Will explode as a supernova, sometime in the next 100,000 years.'],
     source: 'ESO',
   },
   {
@@ -257,7 +257,7 @@ const RAW: Raw[] = [
     id: 'proxima-b', name: 'Proxima Centauri b', emoji: '🌎', kind: 'exoplanet', kindLabel: 'Rocky exoplanet',
     region: 'deep', ra: 14.496, dec: -62.679, distanceLy: 4.246, color: '#6fd6a0', size: 0.55,
     vibe: 'Habitable zone',
-    facts: ['The closest known exoplanet to Earth.', 'Orbits in Proxima’s habitable zone — but bathed in flares.'],
+    facts: ['The closest known exoplanet to Earth.', 'Orbits in Proxima’s habitable zone, but bathed in flares.'],
     discovered: '2016', source: 'ESO',
   },
   {
@@ -271,7 +271,7 @@ const RAW: Raw[] = [
     id: 'kepler-452b', name: 'Kepler-452b', emoji: '🌎', kind: 'exoplanet', kindLabel: 'Super-Earth',
     region: 'deep', ra: 19.773, dec: 44.280, distanceLy: 1402, color: '#7fc9ff', size: 0.6,
     vibe: "Earth’s cousin",
-    facts: ['Orbits a Sun-like star in its habitable zone.', 'Its "year" is 385 days — eerily Earth-like.'],
+    facts: ['Orbits a Sun-like star in its habitable zone.', 'Its "year" is 385 days, eerily Earth-like.'],
     discovered: '2015', source: 'NASA Kepler',
   },
   {
@@ -292,7 +292,7 @@ const RAW: Raw[] = [
     id: 'hd189733b', name: 'HD 189733 b', emoji: '🔵', kind: 'exoplanet', kindLabel: 'Hot Jupiter',
     region: 'deep', ra: 20.004, dec: 22.711, distanceLy: 64.5, color: '#5b8dff', size: 0.7,
     vibe: 'Glass rain',
-    facts: ['A deep cobalt-blue world — the color of shattered glass.', 'Winds of 8,700 km/h may rain sideways molten glass.'],
+    facts: ['A deep cobalt-blue world, the color of shattered glass.', 'Winds of 8,700 km/h may rain sideways molten glass.'],
     discovered: '2005', source: 'Hubble',
   },
   {
@@ -350,7 +350,7 @@ const RAW: Raw[] = [
     id: 'carina', name: 'Carina Nebula', emoji: '🏔️', kind: 'nebula', kindLabel: 'Star-forming region · NGC 3372',
     region: 'deep', ra: 10.752, dec: -59.867, distanceLy: 7500, color: '#ff9d6b', size: 1.2,
     vibe: 'JWST icon',
-    facts: ['JWST’s "Cosmic Cliffs" — towering peaks of gas and dust.', 'A nursery birthing stars far larger than the Sun.'],
+    facts: ['JWST’s "Cosmic Cliffs", towering peaks of gas and dust.', 'A nursery birthing stars far larger than the Sun.'],
     source: 'JWST 2022',
   },
   {
@@ -387,21 +387,21 @@ const RAW: Raw[] = [
     id: '3c273', name: '3C 273', emoji: '💠', kind: 'quasar', kindLabel: 'Quasar',
     region: 'deep', ra: 12.485, dec: 2.052, distanceLy: 2.443e9, color: '#bcd2ff', size: 1.05,
     vibe: 'Brightest quasar',
-    facts: ['The first quasar ever identified — and the brightest in our sky.', 'A feeding black hole outshining its entire galaxy 100×, from 2.4 billion ly away.'],
+    facts: ['The first quasar ever identified, and the brightest in our sky.', 'A feeding black hole outshining its entire galaxy 100×, from 2.4 billion ly away.'],
     discovered: '1963', source: 'Hubble',
   },
   {
     id: 'ton618', name: 'TON 618', emoji: '🌑', kind: 'quasar', kindLabel: 'Hyperluminous quasar',
     region: 'deep', ra: 12.467, dec: 31.193, distanceLy: 10.37e9, color: '#cdb8ff', size: 1.1,
     vibe: 'The biggest monster',
-    facts: ['Hosts one of the most massive black holes known — ~66 billion Suns.', 'Its light left when the universe was a quarter of its current age.'],
+    facts: ['Hosts one of the most massive black holes known, ~66 billion Suns.', 'Its light left when the universe was a quarter of its current age.'],
     source: 'SDSS',
   },
   {
     id: 'virgo-cluster', name: 'Virgo Cluster', emoji: '🌐', kind: 'cluster', kindLabel: 'Galaxy cluster',
     region: 'deep', ra: 12.44, dec: 12.72, distanceLy: 53.8e6, color: '#b8c6ff', size: 1.5,
     vibe: 'A thousand galaxies',
-    facts: ['Up to ~2,000 galaxies bound together — the heart of our Local Supercluster.', 'M87 and its black hole sit at its center.'],
+    facts: ['Up to ~2,000 galaxies bound together, the heart of our Local Supercluster.', 'M87 and its black hole sit at its center.'],
     source: 'NASA/ESA',
   },
   {
@@ -417,7 +417,7 @@ const RAW: Raw[] = [
     id: 'andromeda', name: 'Andromeda Galaxy', emoji: '🌌', kind: 'galaxy', kindLabel: 'Spiral galaxy · M31',
     region: 'deep', ra: 0.712, dec: 41.269, distanceLy: 2.537e6, color: '#cdb8ff', size: 1.5,
     vibe: 'Our destiny',
-    facts: ['The nearest large galaxy — a trillion stars.', 'On a collision course with the Milky Way in ~4.5 billion years.'],
+    facts: ['The nearest large galaxy, a trillion stars.', 'On a collision course with the Milky Way in ~4.5 billion years.'],
     source: 'Hubble',
   },
   {
@@ -431,14 +431,14 @@ const RAW: Raw[] = [
     id: 'sombrero', name: 'Sombrero Galaxy', emoji: '🌌', kind: 'galaxy', kindLabel: 'Spiral galaxy · M104',
     region: 'deep', ra: 12.667, dec: -11.623, distanceLy: 29.3e6, color: '#e8d6a8', size: 1.4,
     vibe: 'Edge-on disk',
-    facts: ['A brilliant bulge ringed by a dark dust lane — like a hat.', 'Hosts a billion-solar-mass central black hole.'],
+    facts: ['A brilliant bulge ringed by a dark dust lane, like a hat.', 'Hosts a billion-solar-mass central black hole.'],
     source: 'Hubble / JWST',
   },
   {
     id: 'stephans-quintet', name: "Stephan's Quintet", emoji: '🌠', kind: 'galaxy', kindLabel: 'Galaxy group',
     region: 'deep', ra: 22.600, dec: 33.966, distanceLy: 290e6, color: '#b8c6ff', size: 1.45,
     vibe: 'JWST debut',
-    facts: ['Five galaxies — four locked in a gravitational tug-of-war.', 'Starred in JWST’s first image release in 2022.'],
+    facts: ['Five galaxies, four locked in a gravitational tug-of-war.', 'Starred in JWST’s first image release in 2022.'],
     source: 'JWST 2022',
   },
 ]

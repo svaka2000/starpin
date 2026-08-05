@@ -19,36 +19,36 @@ interface Step {
 }
 
 const LADDER: Step[] = [
-  { name: 'A Human', size: 1.7, blurb: 'Where it all begins — about 1.7 metres tall.', type: 'prim', ref: 'human', color: '#e7c9a3' },
+  { name: 'A Human', size: 1.7, blurb: 'Where it all begins, about 1.7 metres tall.', type: 'prim', ref: 'human', color: '#e7c9a3' },
   { name: 'The ISS', size: 109, blurb: 'The football-field-sized space station in low orbit.', type: 'prim', ref: 'iss', color: '#cfd6e6' },
-  { name: 'Mount Everest', size: 8849, blurb: 'Earth’s tallest peak — already dwarfed by what’s coming.', type: 'prim', ref: 'mountain', color: '#c2cdd9' },
+  { name: 'Mount Everest', size: 8849, blurb: 'Earth’s tallest peak, already dwarfed by what’s coming.', type: 'prim', ref: 'mountain', color: '#c2cdd9' },
   { name: 'Ceres', size: 939400, blurb: 'The largest asteroid, a dwarf planet in the belt.', type: 'prim', ref: 'rock', color: '#9a9088' },
   { name: 'Pluto', size: 2376600, blurb: 'The famous dwarf at the edge of the planets.', type: 'planet', ref: 'pluto' },
-  { name: 'The Moon', size: 3474800, blurb: 'Our companion — a quarter of Earth’s width.', type: 'planet', ref: 'moon' },
+  { name: 'The Moon', size: 3474800, blurb: 'Our companion, a quarter of Earth’s width.', type: 'planet', ref: 'moon' },
   { name: 'Mercury', size: 4879000, blurb: 'The smallest planet, scorched beside the Sun.', type: 'planet', ref: 'mercury' },
-  { name: 'Mars', size: 6779000, blurb: 'The red planet — about half of Earth.', type: 'planet', ref: 'mars' },
+  { name: 'Mars', size: 6779000, blurb: 'The red planet, about half of Earth.', type: 'planet', ref: 'mars' },
   { name: 'Venus', size: 12104000, blurb: 'Earth’s near-twin in size.', type: 'planet', ref: 'venus' },
   { name: 'Earth', size: 12742000, blurb: 'Home. Look how small it is against what follows.', type: 'planet', ref: 'earth' },
   { name: 'Neptune', size: 49244000, blurb: 'An ice giant ~4× Earth across.', type: 'planet', ref: 'neptune' },
   { name: 'Uranus', size: 50724000, blurb: 'The tilted ice giant.', type: 'planet', ref: 'uranus' },
-  { name: 'Saturn', size: 116460000, blurb: 'The ringed jewel — ~9× Earth.', type: 'planet', ref: 'saturn' },
-  { name: 'Jupiter', size: 139820000, blurb: 'King of planets — all others fit inside it.', type: 'planet', ref: 'jupiter' },
+  { name: 'Saturn', size: 116460000, blurb: 'The ringed jewel, ~9× Earth.', type: 'planet', ref: 'saturn' },
+  { name: 'Jupiter', size: 139820000, blurb: 'King of planets, all others fit inside it.', type: 'planet', ref: 'jupiter' },
   { name: 'The Sun', size: 1391400000, blurb: '109 Earths across. Now the planets are specks.', type: 'planet', ref: 'sun' },
   { name: 'Sirius A', size: 2380000000, blurb: 'The brightest night-sky star, bigger than the Sun.', type: 'star', color: '#cfe2ff' },
-  { name: 'Arcturus', size: 36000000000, blurb: 'An orange giant — 25× the Sun’s width.', type: 'star', color: '#ffc27a' },
-  { name: 'Betelgeuse', size: 1230000000000, blurb: 'A red supergiant — it would swallow Jupiter’s orbit.', type: 'star', color: '#ff6b5a' },
+  { name: 'Arcturus', size: 36000000000, blurb: 'An orange giant, 25× the Sun’s width.', type: 'star', color: '#ffc27a' },
+  { name: 'Betelgeuse', size: 1230000000000, blurb: 'A red supergiant, it would swallow Jupiter’s orbit.', type: 'star', color: '#ff6b5a' },
   { name: 'UY Scuti', size: 2380000000000, blurb: 'One of the largest known stars.', type: 'star', color: '#ff8a5c' },
-  { name: 'The Solar System', size: 9000000000000, blurb: 'Out to Neptune’s orbit — the Sun is now a dot.', type: 'cloud', ref: 'solar' },
+  { name: 'The Solar System', size: 9000000000000, blurb: 'Out to Neptune’s orbit, the Sun is now a dot.', type: 'cloud', ref: 'solar' },
   { name: 'The Oort Cloud', size: 15000000000000000, blurb: 'A trillion-comet shell at the Sun’s frontier.', type: 'cloud', ref: 'oort' },
   { name: 'Crab Nebula', size: 100000000000000000, blurb: 'A supernova’s wreckage, ~11 light-years across.', type: 'image', ref: 'crab' },
   { name: 'Orion Nebula', size: 230000000000000000, blurb: 'A glowing stellar nursery, 24 light-years wide.', type: 'image', ref: 'orion' },
-  { name: 'Carina Nebula', size: 460000000000000000, blurb: 'JWST’s Cosmic Cliffs — birthplace of giant stars.', type: 'image', ref: 'carina' },
+  { name: 'Carina Nebula', size: 460000000000000000, blurb: 'JWST’s Cosmic Cliffs, birthplace of giant stars.', type: 'image', ref: 'carina' },
   { name: 'The Milky Way', size: 950000000000000000000, blurb: '100+ billion stars. The Sun is one of them.', type: 'cloud', ref: 'galaxy' },
   { name: 'Andromeda Galaxy', size: 2000000000000000000000, blurb: 'Our giant neighbour, on a collision course with us.', type: 'image', ref: 'andromeda' },
   { name: 'The Local Group', size: 95000000000000000000000, blurb: 'The Milky Way, Andromeda and ~80 smaller galaxies.', type: 'cloud', ref: 'group' },
   { name: 'Virgo Cluster', size: 140000000000000000000000, blurb: 'Up to 2,000 galaxies bound by gravity.', type: 'image', ref: 'virgo-cluster' },
-  { name: 'Laniakea', size: 4900000000000000000000000, blurb: 'Our supercluster — 100,000 galaxies flowing as one.', type: 'cloud', ref: 'web' },
-  { name: 'Observable Universe', size: 880000000000000000000000000, blurb: 'Everything light has reached us from — 93 billion ly.', type: 'cloud', ref: 'universe' },
+  { name: 'Laniakea', size: 4900000000000000000000000, blurb: 'Our supercluster, 100,000 galaxies flowing as one.', type: 'cloud', ref: 'web' },
+  { name: 'Observable Universe', size: 880000000000000000000000000, blurb: 'Everything light has reached us from, 93 billion ly.', type: 'cloud', ref: 'universe' },
 ]
 const N = LADDER.length
 
@@ -400,7 +400,7 @@ export default function ScaleMode() {
       <div className="absolute bottom-6 left-1/2 w-[min(760px,92vw)] -translate-x-1/2">
         <div className="mb-2 flex items-center justify-between px-1 text-[10px] uppercase tracking-wider text-slate-500">
           <span>🧍 You</span>
-          <span className="text-slate-400">scroll or drag — everything is shown to true scale</span>
+          <span className="text-slate-400">scroll or drag, everything is shown to true scale</span>
           <span>Universe 🌌</span>
         </div>
         <input

@@ -219,7 +219,7 @@ export default function VoyagePanel() {
                 </div>
                 <p className="font-display text-[16px] font-medium text-parchment">Your voyage is empty</p>
                 <p className="mt-1.5 text-[12px] leading-relaxed text-faint">
-                  Click any world in the cosmos to pin it — or launch a curated journey from the compass.
+                  Click any world in the cosmos to pin it, or launch a curated journey from the compass.
                 </p>
               </div>
             ) : (

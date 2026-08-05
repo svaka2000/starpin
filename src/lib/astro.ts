@@ -61,7 +61,7 @@ export const PROPULSION: Propulsion[] = [
   { id: 'daedalus', label: 'Fusion ship', emoji: '⚛️', speedKms: 36000, blurb: 'Project Daedalus · 12% the speed of light', real: true },
   { id: 'tenth', label: '10% light', emoji: '💫', speedKms: SPEED_OF_LIGHT_KMS * 0.1, blurb: 'Breakthrough Starshot territory', real: true },
   { id: 'light', label: 'Light speed', emoji: '✨', speedKms: SPEED_OF_LIGHT_KMS, blurb: "The universe's hard speed limit", real: true },
-  { id: 'warp', label: 'Warp 9', emoji: '🌀', speedKms: SPEED_OF_LIGHT_KMS * 1516, blurb: 'Fictional — just for the dream', real: false },
+  { id: 'warp', label: 'Warp 9', emoji: '🌀', speedKms: SPEED_OF_LIGHT_KMS * 1516, blurb: 'Fictional, just for the dream', real: false },
 ]
 
 export function propulsionById(id: string): Propulsion {
@@ -85,7 +85,7 @@ export function compact(n: number, digits = 2): string {
 
 /** Friendly distance label from a light-year value, auto-picking units. */
 export function describeDistance(ly: number): string {
-  if (ly <= 0) return '—'
+  if (ly <= 0) return '·'
   if (ly < 0.02) {
     const au = ly / AU_IN_LY
     if (au < 0.01) return `${compact(ly * LY_IN_KM)} km`

@@ -12,6 +12,7 @@ import IntroCarousel from './ui/IntroCarousel'
 import MusicPanel from './ui/MusicPanel'
 import { buildShareUrl, parseShareUrl } from './lib/exporters'
 import { audio } from './lib/audio'
+import { spotify } from './lib/spotify'
 import { useVoyage } from './store/useVoyage'
 
 export default function App() {
@@ -56,6 +57,12 @@ export default function App() {
     window.clearTimeout(toastTimer.current)
     toastTimer.current = window.setTimeout(() => setToast(null), 2600) as unknown as number
   }
+
+  // Finish the Spotify OAuth handshake if we just came back from consent.
+  // (The voyage itself survives the round-trip via the persisted store.)
+  useEffect(() => {
+    spotify.init()
+  }, [])
 
   // Load a shared voyage from the URL.
   useEffect(() => {

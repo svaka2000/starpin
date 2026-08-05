@@ -51,16 +51,16 @@ export function buildPlanText(stops: string[], propId: string): string {
   const math = computeLegs(stops, propId)
   const lines: string[] = []
   lines.push('STARPIN · MISSION PLAN')
-  lines.push('Plan voyages across a living universe — built for Stardance')
+  lines.push('Plan voyages across a living universe, built for Stardance')
   lines.push('='.repeat(52))
   lines.push(`Propulsion: ${math.prop.emoji} ${math.prop.label} (${math.prop.blurb})`)
   lines.push(`Stops: ${math.count}   ·   Total distance: ${describeDistance(math.totalLy)}`)
-  lines.push(`Total travel time: ${describeDuration(math.totalSeconds)}${olderThanUniverse(math.totalSeconds) ? ' — older than the universe!' : ''}`)
+  lines.push(`Total travel time: ${describeDuration(math.totalSeconds)}${olderThanUniverse(math.totalSeconds) ? ', older than the universe!' : ''}`)
   lines.push('')
   stops.forEach((id, i) => {
     const b = getBody(id)
     if (!b) return
-    lines.push(`${i + 1}. ${b.emoji}  ${b.name}  —  ${b.kindLabel}`)
+    lines.push(`${i + 1}. ${b.emoji}  ${b.name} ,  ${b.kindLabel}`)
     lines.push(`     ${b.vibe} · ${b.region === 'solar' ? describeDistance(b.distanceLy) + ' from the Sun' : describeDistance(b.distanceLy) + ' from Earth'}`)
     const leg = math.legs[i]
     if (leg) {
