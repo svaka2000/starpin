@@ -17,35 +17,35 @@ const SLIDES: Slide[] = [
     eyebrow: 'STARPIN',
     title: 'Plan voyages across a living universe',
     body: 'Drop pins on real worlds, chart a route through the cosmos, and watch the light-years unfold.',
-    accent: '#8ab4ff',
+    accent: '#f1b85e',
   },
   {
     bg: '/textures/deepsky/orion.jpg',
     eyebrow: 'REAL WORLDS',
     title: 'Pin real planets, stars & galaxies',
     body: '50+ destinations placed by true NASA coordinates — from the Moon to the Andromeda Galaxy, each with real data and telescope imagery.',
-    accent: '#ff9ec4',
+    accent: '#f0a978',
   },
   {
     bg: '/textures/deepsky/crab.jpg',
     eyebrow: 'INTERSTELLAR TRAVEL',
     title: 'Cross impossible distances',
     body: 'Choose your ride — Voyager, a fusion ship, even light speed — and see the real travel-time to anywhere in the universe.',
-    accent: '#9be0c0',
+    accent: '#e8c9a0',
   },
   {
     bg: '/textures/deepsky/andromeda.jpg',
     eyebrow: 'THE BIG PICTURE',
     title: 'Grasp the scale of everything',
     body: 'Zoom from your own height out to the edge of the observable universe — every world shown to true scale.',
-    accent: '#cdb8ff',
+    accent: '#d8cbb8',
   },
   {
     bg: '/textures/deepsky/sombrero.jpg',
     eyebrow: 'READY?',
     title: 'Where does your voyage begin?',
     body: 'Launch a guided journey, or just start exploring the cosmos.',
-    accent: '#ffd479',
+    accent: '#f1b85e',
   },
 ]
 
@@ -68,6 +68,9 @@ export default function IntroCarousel({
 }) {
   const [i, setI] = useState(0)
   const [dir, setDir] = useState(1)
+  // Once the viewer navigates themselves, autoplay hands over control for good —
+  // otherwise the timer keeps advancing slides out from under them.
+  const [manual, setManual] = useState(false)
   const last = SLIDES.length - 1
 
   const go = (n: number, d: number) => {
@@ -75,12 +78,19 @@ export default function IntroCarousel({
     setI(Math.max(0, Math.min(last, n)))
   }
 
-  // auto-advance (stops on the final slide)
+  const goManual = (n: number, d: number) => {
+    setManual(true)
+    go(n, d)
+  }
+
+  // auto-advance (stops on the final slide, and as soon as the viewer takes over)
   useEffect(() => {
-    if (!open || i === last) return
+    if (!open || manual || i === last) return
     const t = window.setTimeout(() => go(i + 1, 1), DURATION)
     return () => window.clearTimeout(t)
-  }, [i, open, last])
+  }, [i, open, last, manual])
+
+  const autoplaying = open && !manual && i !== last
 
   const slide = SLIDES[i]
 
@@ -109,8 +119,8 @@ export default function IntroCarousel({
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.18}
               onDragEnd={(_, info) => {
-                if (info.offset.x < -80 && i < last) go(i + 1, 1)
-                else if (info.offset.x > 80 && i > 0) go(i - 1, -1)
+                if (info.offset.x < -80 && i < last) goManual(i + 1, 1)
+                else if (info.offset.x > 80 && i > 0) goManual(i - 1, -1)
               }}
             >
               {/* Ken Burns background */}
@@ -212,7 +222,7 @@ export default function IntroCarousel({
                     </div>
                     <button
                       onClick={() => onFinish()}
-                      className="mt-2 rounded-full bg-stardust px-7 py-3 text-sm font-semibold text-slate-950 shadow-[0_8px_30px_-8px_rgba(138,180,255,0.8)] transition hover:brightness-110"
+                      className="mt-2 rounded-full bg-stardust px-7 py-3 text-sm font-semibold text-[#241a0b] shadow-[0_8px_30px_-8px_rgba(241,184,94,0.75)] transition hover:brightness-110"
                     >
                       Just start exploring →
                     </button>
@@ -222,16 +232,27 @@ export default function IntroCarousel({
             </motion.div>
           </AnimatePresence>
 
-          {/* top progress bars */}
+          {/* top progress bars — past slides read as filled, the active one fills only while
+              autoplay is actually running. Keyed by index so a manual jump restarts the fill
+              instead of letting the previous slide's timer keep creeping along. */}
           <div className="absolute inset-x-0 top-0 z-20 flex gap-1.5 p-3">
             {SLIDES.map((_, k) => (
               <div key={k} className="h-1 flex-1 overflow-hidden rounded-full bg-white/15">
-                <motion.div
-                  className="h-full bg-white"
-                  initial={false}
-                  animate={{ width: k <= i ? '100%' : '0%' }}
-                  transition={k === i && i !== last ? { duration: DURATION / 1000, ease: 'linear' } : { duration: 0.3 }}
-                />
+                {k < i ? (
+                  <div className="h-full w-full bg-white/90" />
+                ) : k === i ? (
+                  autoplaying ? (
+                    <motion.div
+                      key={`fill-${i}`}
+                      className="h-full bg-white"
+                      initial={{ width: '0%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: DURATION / 1000, ease: 'linear' }}
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-white/90" />
+                  )
+                ) : null}
               </div>
             ))}
           </div>
@@ -247,7 +268,7 @@ export default function IntroCarousel({
           {/* prev / next + dots */}
           <div className="absolute inset-x-0 bottom-7 z-20 flex items-center justify-center gap-5">
             <button
-              onClick={() => go(i - 1, -1)}
+              onClick={() => goManual(i - 1, -1)}
               disabled={i === 0}
               className="grid h-10 w-10 place-items-center rounded-full bg-white/8 text-white backdrop-blur-md transition hover:bg-white/15 disabled:opacity-0"
               aria-label="Previous"
@@ -258,7 +279,7 @@ export default function IntroCarousel({
               {SLIDES.map((_, k) => (
                 <button
                   key={k}
-                  onClick={() => go(k, k > i ? 1 : -1)}
+                  onClick={() => goManual(k, k > i ? 1 : -1)}
                   className={`h-2 rounded-full transition-all ${k === i ? 'w-6 bg-white' : 'w-2 bg-white/35 hover:bg-white/60'}`}
                   aria-label={`Slide ${k + 1}`}
                 />

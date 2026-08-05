@@ -17,7 +17,7 @@ export interface TexCfg {
 export const TEXTURES: Record<string, TexCfg> = {
   sun: { map: '/textures/sun.jpg', sun: true },
   mercury: { map: '/textures/mercury.jpg', tilt: 0.03 },
-  venus: { map: '/textures/venus.jpg', tilt: 177.4, atmosphere: '#e8cd8f' },
+  venus: { map: '/textures/venus.jpg', tilt: 177.4, atmosphere: '#e3d4b4' },
   earth: {
     map: '/textures/earth_day.jpg',
     bump: '/textures/earth_bump.jpg',
@@ -25,14 +25,14 @@ export const TEXTURES: Record<string, TexCfg> = {
     night: '/textures/earth_night.png',
     spec: '/textures/earth_spec.jpg',
     tilt: 23.4,
-    atmosphere: '#6ab4ff',
+    atmosphere: '#a8c8f0',
   },
   moon: { map: '/textures/moon.jpg', tilt: 6.7 },
-  mars: { map: '/textures/mars.jpg', tilt: 25.2, atmosphere: '#e0875a' },
-  jupiter: { map: '/textures/jupiter.jpg', tilt: 3.1, atmosphere: '#d9a679' },
+  mars: { map: '/textures/mars.jpg', tilt: 25.2, atmosphere: '#d8a98c' },
+  jupiter: { map: '/textures/jupiter.jpg', tilt: 3.1, atmosphere: '#d6bb9c' },
   saturn: { map: '/textures/saturn.jpg', tilt: 26.7, ring: '/textures/saturn_ring.jpg' },
-  uranus: { map: '/textures/uranus.jpg', tilt: 97.8, atmosphere: '#9fe7e3' },
-  neptune: { map: '/textures/neptune.jpg', tilt: 28.3, atmosphere: '#4060ff' },
+  uranus: { map: '/textures/uranus.jpg', tilt: 97.8, atmosphere: '#bcd8d6' },
+  neptune: { map: '/textures/neptune.jpg', tilt: 28.3, atmosphere: '#7d9ee0' },
   pluto: { map: '/textures/pluto.jpg', tilt: 119.6 },
 }
 

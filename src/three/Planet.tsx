@@ -81,10 +81,12 @@ function sunMaterial(map: THREE.Texture): THREE.ShaderMaterial {
   })
 }
 
-/** Sun-aware atmospheric rim glow — brighter on the sunlit limb. */
+/** Sun-aware atmospheric limb — a thin bright line hugging the disc edge, like a real
+    horizon seen from orbit. Deliberately NOT a wide shell: a fat halo reads as a sci-fi
+    force field, so the fresnel is raised hard to confine the glow to the last few pixels. */
 function atmosphereMaterial(color: string): THREE.ShaderMaterial {
   return new THREE.ShaderMaterial({
-    uniforms: { glowColor: { value: new THREE.Color(color) }, power: { value: 3.0 } },
+    uniforms: { glowColor: { value: new THREE.Color(color) }, power: { value: 9.0 } },
     vertexShader: WORLD_VERT,
     fragmentShader: `
       uniform vec3 glowColor; uniform float power;
@@ -94,8 +96,9 @@ function atmosphereMaterial(color: string): THREE.ShaderMaterial {
         vec3 V = normalize(cameraPosition - vWP);
         vec3 L = normalize(-vWP);
         float fres = pow(clamp(1.0 - abs(dot(N, V)), 0.0, 1.0), power);
-        float day = smoothstep(-0.3, 0.35, dot(N, L));
-        gl_FragColor = vec4(glowColor, fres * (0.16 + 0.84 * day));
+        // scatter only where sunlight actually grazes the limb
+        float day = smoothstep(-0.12, 0.42, dot(N, L));
+        gl_FragColor = vec4(glowColor, fres * 0.55 * (0.05 + 0.95 * day));
       }`,
     transparent: true,
     blending: THREE.AdditiveBlending,
@@ -185,7 +188,7 @@ function TexturedPlanet({ body, core }: { body: CelestialBody; core: number }) {
 
       {atmoMat && (
         <mesh material={atmoMat}>
-          <sphereGeometry args={[core * 1.18, 48, 48]} />
+          <sphereGeometry args={[core * 1.022, 64, 64]} />
         </mesh>
       )}
 
