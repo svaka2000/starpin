@@ -1,16 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Starpin">
   <defs>
-    <radialGradient id="g" cx="50%" cy="38%" r="65%">
-      <stop offset="0%" stop-color="#cfe0ff"/>
-      <stop offset="45%" stop-color="#8ab4ff"/>
-      <stop offset="100%" stop-color="#6d5cf0"/>
+    <radialGradient id="star" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#fdf0d6"/>
+      <stop offset="45%" stop-color="#f8cd86"/>
+      <stop offset="100%" stop-color="#f1b85e"/>
     </radialGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="#05060c"/>
-  <circle cx="14" cy="16" r="1.4" fill="#cfe0ff"/>
-  <circle cx="50" cy="13" r="1" fill="#8ab4ff"/>
-  <circle cx="52" cy="40" r="1.2" fill="#a78bfa"/>
-  <path d="M32 11c-9 0-16 7-16 16 0 11 16 26 16 26s16-15 16-26c0-9-7-16-16-16z" fill="url(#g)"/>
-  <circle cx="32" cy="27" r="6.5" fill="#0a0c18"/>
-  <circle cx="29.6" cy="24.6" r="2.2" fill="#cfe0ff" opacity="0.9"/>
+
+  <!-- warm near-black plate, matching the app surface -->
+  <rect width="64" height="64" rx="14" fill="#14131a"/>
+
+  <!-- map pin: dropping a pin on the cosmos -->
+  <path d="M32 56.5C32 56.5 47 38.2 47 25A15 15 0 1 0 17 25C17 38.2 32 56.5 32 56.5Z" fill="#f1b85e"/>
+
+  <!-- window cut into the pin head -->
+  <circle cx="32" cy="25" r="10.6" fill="#14131a"/>
+
+  <!-- distant stars -->
+  <circle cx="25.6" cy="19.6" r="0.68" fill="#f3f1ea" opacity="0.85"/>
+  <circle cx="38.6" cy="19.2" r="0.58" fill="#f1b85e" opacity="0.8"/>
+  <circle cx="38.8" cy="31.2" r="0.62" fill="#f3f1ea" opacity="0.7"/>
+  <circle cx="25.2" cy="31.2" r="0.52" fill="#f1b85e" opacity="0.7"/>
+
+  <!-- eight-point beacon star -->
+  <path d="M32 15.4 L34.1 22.9 L40 25 L34.1 27.1 L32 34.6 L29.9 27.1 L24 25 L29.9 22.9 Z" fill="url(#star)"/>
+
+  <!-- orbital ring -->
+  <ellipse cx="32" cy="26.2" rx="9.5" ry="3.15" fill="none" stroke="#f3f1ea" stroke-width="0.9"
+           transform="rotate(-16 32 26.2)"/>
 </svg>
