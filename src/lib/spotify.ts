@@ -24,8 +24,11 @@ const K = {
 
 export const spotifyConfigured = Boolean(CLIENT_ID)
 
+// Spotify matches redirect URIs EXACTLY, so this must equal the dashboard entry
+// character for character. No trailing slash: register the bare origin
+// (https://starpin.vercel.app, http://127.0.0.1:5273).
 function redirectUri(): string {
-  return `${window.location.origin}/`
+  return window.location.origin
 }
 
 function randomString(len: number): string {
