@@ -118,3 +118,20 @@ export function parseSpotify(input: string): { kind: string; id: string } | null
 export function spotifyEmbedSrc(kind: string, id: string): string {
   return `https://open.spotify.com/embed/${kind}/${id}?utm_source=generator&theme=0`
 }
+
+/**
+ * Real title for a playlist/track via Spotify's public oEmbed endpoint.
+ * Keyless and needs no account, so saved items can show their actual name
+ * rather than a generic label. Falls back to the kind if the lookup fails.
+ */
+export async function spotifyTitle(kind: string, id: string): Promise<string> {
+  const fallback = kind.charAt(0).toUpperCase() + kind.slice(1)
+  try {
+    const res = await fetch(`https://open.spotify.com/oembed?url=https://open.spotify.com/${kind}/${id}`)
+    if (!res.ok) return fallback
+    const data = (await res.json()) as { title?: string }
+    return data.title?.trim() || fallback
+  } catch {
+    return fallback
+  }
+}

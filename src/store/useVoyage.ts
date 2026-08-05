@@ -4,6 +4,13 @@ import { COSMOS, SAMPLE_VOYAGE } from '../data/cosmos'
 
 export type ViewMode = 'cosmos' | 'orrery' | 'sky' | 'scale'
 
+/** A Spotify playlist/track the listener saved, so they never re-paste a link. */
+export interface SavedTune {
+  kind: string
+  id: string
+  label: string
+}
+
 interface VoyageState {
   stops: string[]
   selectedId: string | null
@@ -14,6 +21,8 @@ interface VoyageState {
   playing: boolean
   seenOnboarding: boolean
   audioOn: boolean
+  tunes: SavedTune[]
+  lastTuneId: string | null
 
   addStop: (id: string) => void
   removeStop: (id: string) => void
@@ -32,6 +41,9 @@ interface VoyageState {
   setPanelOpen: (open: boolean) => void
   setPlaying: (p: boolean) => void
   setAudioOn: (on: boolean) => void
+  saveTune: (t: SavedTune) => void
+  removeTune: (id: string) => void
+  setLastTune: (id: string | null) => void
   dismissOnboarding: () => void
 }
 
@@ -47,6 +59,8 @@ export const useVoyage = create<VoyageState>()(
       playing: false,
       seenOnboarding: false,
       audioOn: false,
+      tunes: [],
+      lastTuneId: null,
 
       addStop: (id) =>
         set((s) =>
@@ -86,6 +100,17 @@ export const useVoyage = create<VoyageState>()(
       setPanelOpen: (open) => set({ panelOpen: open }),
       setPlaying: (p) => set({ playing: p }),
       setAudioOn: (on) => set({ audioOn: on }),
+      saveTune: (t) =>
+        set((s) => ({
+          tunes: [t, ...s.tunes.filter((x) => x.id !== t.id)].slice(0, 8),
+          lastTuneId: t.id,
+        })),
+      removeTune: (id) =>
+        set((s) => ({
+          tunes: s.tunes.filter((x) => x.id !== id),
+          lastTuneId: s.lastTuneId === id ? null : s.lastTuneId,
+        })),
+      setLastTune: (id) => set({ lastTuneId: id }),
       dismissOnboarding: () => set({ seenOnboarding: true }),
     }),
     {
@@ -96,6 +121,8 @@ export const useVoyage = create<VoyageState>()(
         view: s.view,
         seenOnboarding: s.seenOnboarding,
         audioOn: s.audioOn,
+        tunes: s.tunes,
+        lastTuneId: s.lastTuneId,
       }),
     },
   ),

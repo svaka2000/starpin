@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { audio } from '../lib/audio'
-import { radio, STATIONS, SPOTIFY_CURATED, parseSpotify, spotifyEmbedSrc } from '../lib/music'
+import { radio, STATIONS, SPOTIFY_CURATED, parseSpotify, spotifyEmbedSrc, spotifyTitle } from '../lib/music'
 import { spotify, player, login, logout, isConnected, spotifyConfigured } from '../lib/spotify'
-import { useVoyage } from '../store/useVoyage'
+import { useVoyage, type SavedTune } from '../store/useVoyage'
 import { Music, Pause, Play, X } from './icons'
 
 export default function MusicPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   const audioOn = useVoyage((s) => s.audioOn)
   const setAudioOn = useVoyage((s) => s.setAudioOn)
+  const tunes = useVoyage((s) => s.tunes)
+  const lastTuneId = useVoyage((s) => s.lastTuneId)
+  const saveTune = useVoyage((s) => s.saveTune)
+  const removeTune = useVoyage((s) => s.removeTune)
+  const setLastTune = useVoyage((s) => s.setLastTune)
 
   const [embed, setEmbed] = useState<{ kind: string; id: string } | null>(null)
   const [paste, setPaste] = useState('')
@@ -19,6 +24,14 @@ export default function MusicPanel({ open, onClose }: { open: boolean; onClose: 
   // re-render when radio or Spotify playback state changes
   useEffect(() => radio.subscribe(() => force((n) => n + 1)), [])
   useEffect(() => spotify.subscribe(() => force((n) => n + 1)), [])
+
+  // Re-open on whatever was playing last, so a link is only ever pasted once.
+  useEffect(() => {
+    if (!open || embed) return
+    const last = tunes.find((t) => t.id === lastTuneId)
+    if (last) setEmbed({ kind: last.kind, id: last.id })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const connected = isConnected()
 
@@ -70,10 +83,17 @@ export default function MusicPanel({ open, onClose }: { open: boolean; onClose: 
 
   const onPaste = () => {
     const p = parseSpotify(paste)
-    if (p) {
-      playSpotify(p.kind, p.id)
-      setPaste('')
-    }
+    if (!p) return
+    setPaste('')
+    playSpotify(p.kind, p.id)
+    // save immediately with a placeholder, then upgrade to the real title
+    saveTune({ kind: p.kind, id: p.id, label: p.kind.charAt(0).toUpperCase() + p.kind.slice(1) })
+    spotifyTitle(p.kind, p.id).then((label) => saveTune({ kind: p.kind, id: p.id, label }))
+  }
+
+  const playSaved = (t: SavedTune) => {
+    setLastTune(t.id)
+    playSpotify(t.kind, t.id)
   }
 
   return (
@@ -208,6 +228,33 @@ export default function MusicPanel({ open, onClose }: { open: boolean; onClose: 
                   Play
                 </button>
               </div>
+
+              {tunes.length > 0 && (
+                <div className="mt-2.5">
+                  <div className="eyebrow mb-1.5">Your saved music</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tunes.map((t) => (
+                      <span
+                        key={t.id}
+                        className={`group flex items-center gap-1 rounded-full py-1 pl-2.5 pr-1 text-[12px] ring-1 transition ${
+                          embed?.id === t.id ? 'bg-stardust/15 text-parchment ring-stardust/40' : 'bg-white/[0.04] text-hush ring-white/[0.08]'
+                        }`}
+                      >
+                        <button onClick={() => playSaved(t)} className="transition hover:text-parchment">
+                          {t.label}
+                        </button>
+                        <button
+                          onClick={() => removeTune(t.id)}
+                          className="grid h-4 w-4 place-items-center rounded-full text-faint transition hover:bg-ember/20 hover:text-ember"
+                          aria-label="Forget this"
+                        >
+                          <X width={9} height={9} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {SPOTIFY_CURATED.map((c) => (
